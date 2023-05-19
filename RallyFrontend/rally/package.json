@@ -11,6 +11,8 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@kalimahapps/vue-icons": "^1.4.0",
     "pinia": "^2.0.36",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"

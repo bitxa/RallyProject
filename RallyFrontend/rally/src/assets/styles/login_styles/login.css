@@ -5,10 +5,9 @@ body {
 main {
   width: 100%;
   min-height: 100vh;
-
-  background: url('../img/login_background.png') no-repeat center center fixed;
+  height: auto;
+  background: url("../img/login_background.png") no-repeat center center fixed;
   background-size: cover;
-  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +27,7 @@ form {
   padding-bottom: 8vh;
 }
 
-form input{
+form input {
   font-weight: bold;
   font-size: small;
   height: 5.5vh;
@@ -40,41 +39,41 @@ form input{
   color: #56575c;
 }
 
-form input::placeholder{
+form input::placeholder {
   font-weight: bold;
   font-size: small;
-  color: #9FA1A7;
+  color: #9fa1a7;
   padding-left: 0.2vh;
 }
 
-form input:hover{
-  border-style:double;
-  border-color: #F35727;
+form input:hover {
+  border-style: double;
+  border-color: #f35727;
 }
 
-
-form button{
+form button {
   height: 5.5vh;
   width: 70%;
   margin: 1vh;
-  background-color: #F35727;
+  background-color: #f35727;
   border-style: none;
   border-radius: 20px;
   font-weight: bold;
-  font-size:small;
-  color: #F0F0F0;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  font-size: small;
+  color: #f0f0f0;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-form button:hover{
-  background-color: #F97B22;
-  width: 75%
+form button:hover {
+  background-color: #f97b22;
+  width: 75%;
 }
-
 
 form h3 {
   font-weight: bold;
-  color: #F0F0F0;
+  color: #f0f0f0;
 }
 
 form img {
@@ -86,9 +85,9 @@ form img {
 form a {
   margin: 2vh;
   text-decoration: none;
-  color:#9FA1A7;
+  color: #9fa1a7;
 }
 
-form a:hover{
-  color: #F0F0F0;
+form a:hover {
+  color: #f0f0f0;
 }

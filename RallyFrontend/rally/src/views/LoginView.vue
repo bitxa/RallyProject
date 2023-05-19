@@ -1,6 +1,5 @@
 
-<style scoped src="@/assets/login_styles/login.css">
-</style>
+<style scoped src="@/assets/styles/login_styles/login.css"></style>
 
 <template>
     <main>
@@ -19,8 +18,8 @@
     </main>
 </template>
 
-<script lang="ts"> 
+<script lang="ts">
 export default {
-  name: 'LoginView',
+    name: 'LoginView',
 }
 </script>

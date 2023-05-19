@@ -1,17 +1,30 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
+import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory("/"),
   routes: [
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
+      path: "/",
+      redirect: "/panel",
     },
-    
-    
-  ]
-})
 
-export default router
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/LoginView.vue"),
+    },
+
+    {
+      path: "/panel",
+      name: "admin-panel",
+      component: () => import("../views/AdminPanelView.vue"),
+      children: [
+        { path: "competitions", component: Object },
+        { path: "circuits", component: Object },
+        { path: "racers", component: Object },
+      ],
+    },
+  ],
+});
+
+export default router;

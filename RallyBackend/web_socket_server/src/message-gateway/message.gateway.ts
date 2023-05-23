@@ -9,7 +9,12 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  //? solo para pruebas
+  cors: {
+    origin: '*',
+  },
+})
 export class MessageGateway implements OnModuleInit {
   logger = new Logger('MessageLogger');
 

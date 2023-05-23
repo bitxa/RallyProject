@@ -16,44 +16,48 @@
             </div>
 
             <div class="menu">
-                <button type="button" class="menu_button">
+                <button type="button" class="menu_button" @click="selectMenuItem('times')"
+                    :class="{ active: currentComponent === 'TimesComponent' }">
                     <span>
-                        <JaFillChronometer class="menu_icon" />
+                        <JaFillChronometer class=" menu_icon" />
                     </span>
                     <span>
                         <p> Tiempos</p>
                     </span>
                 </button>
 
-                <button type="button" class="menu_button">
+                <button type="button" class="menu_button" @click="selectMenuItem('competences')"
+                    :class="{ active: currentComponent === 'CompetencesComponent' }">
                     <span>
-                        <UnPathfinderUnite class="menu_icon" />
+                        <UnPathfinderUnite class=" menu_icon" />
                     </span>
                     <span>
                         <p> Competiciones</p>
                     </span>
                 </button>
 
-                <button type="button" class="menu_button">
+                <button type="button" class="menu_button" @click="selectMenuItem('circuits')"
+                    :class="{ active: currentComponent === 'CircuitsComponent' }">
                     <span>
-                        <FaRoad class="menu_icon" />
+                        <FaRoad class=" menu_icon" />
                     </span>
                     <span>
                         <p> Circuitos </p>
                     </span>
                 </button>
 
-                <button type="button" class="menu_button">
+                <button type="button" class="menu_button" @click="selectMenuItem('competitors')"
+                    :class="{ active: currentComponent === 'CompetitorsComponent' }">
                     <span>
                         <FlFilledPeopleTeam class="menu_icon" />
                     </span>
-
                     <span>
                         <p> Competidores</p>
                     </span>
                 </button>
 
-                <button type="button" class="menu_button">
+                <button type="button" class="menu_button" @click="selectMenuItem('sponsors')"
+                    :class="{ active: currentComponent === 'SponsorsComponent' }">
                     <span>
                         <CaLocationCompanyFilled class="menu_icon" />
                     </span>
@@ -65,7 +69,7 @@
             </div>
         </aside>
         <main>
-            <CompetencesComponent />
+            <component :is="currentComponent"></component>
         </main>
     </div>
 </template>
@@ -77,6 +81,11 @@ import { FlFilledPeopleTeam } from "@kalimahapps/vue-icons";
 import { CaLocationCompanyFilled } from "@kalimahapps/vue-icons";
 import { FaRoad } from "@kalimahapps/vue-icons";
 import CompetencesComponent from "@/components/competences/CompetencesComponent.vue";
+import TimesComponent from "@/components/competences/TimesComponent.vue";
+import CircuitsComponent from "@/components/competences/CircuitsComponent.vue";
+import CompetitorsComponent from "@/components/competences/CompetitorsComponent.vue";
+import SponsorsComponent from "@/components/competences/SponsorsComponent.vue";
+
 
 export default {
     name: 'LoginView',
@@ -86,7 +95,37 @@ export default {
         FaRoad,
         FlFilledPeopleTeam,
         CaLocationCompanyFilled,
-        CompetencesComponent
+        CompetencesComponent,
+        TimesComponent,
+        CircuitsComponent,
+        CompetitorsComponent,
+        SponsorsComponent,
+    },
+    data() {
+        return {
+            currentComponent: "CompetencesComponent",
+        };
+    },
+    methods: {
+        selectMenuItem(menuItem: string) {
+            switch (menuItem) {
+                case 'times':
+                    this.currentComponent = 'TimesComponent';
+                    break;
+                case 'competences':
+                    this.currentComponent = 'CompetencesComponent';
+                    break;
+                case 'circuits':
+                    this.currentComponent = 'CircuitsComponent';
+                    break;
+                case 'competitors':
+                    this.currentComponent = 'CompetitorsComponent';
+                    break;
+                case 'sponsors':
+                    this.currentComponent = 'SponsorsComponent';
+                    break;
+            }
+        },
     },
 
 

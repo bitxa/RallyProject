@@ -5,6 +5,7 @@
   flex-direction: row;
   align-items: center;
   padding: 2vh;
+  padding-bottom: 0;
 }
 
 .header h2 {
@@ -15,6 +16,8 @@
   align-items: center;
   font-weight: 600;
   color: #f9f2ed;
+  letter-spacing: 0.5vh;
+  font-variant-caps: all-small-caps;
 }
 
 .header .query_elements {

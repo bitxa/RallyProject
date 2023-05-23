@@ -29,11 +29,12 @@ export class MessageGateway implements OnModuleInit {
 
   @SubscribeMessage('newMessage')
   onNewMessage(@MessageBody() body: any) {
-    console.log('New message: ' + JSON.stringify(body));
-
+    console.log('COLLECTED MESSAGE');
+    console.log(`from: ${body.id}`);
+    console.log(`time: ${body.time}`);
     this.server.emit('onMessage', {
-      msg: 'NEW MESSAGE FROM SENSOR',
-      content: body
+      id: body.id,
+      time: body.time,
     });
   }
 }

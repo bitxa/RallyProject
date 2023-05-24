@@ -11,6 +11,11 @@ async function bootstrap() {
     .setDescription('The Items API description')
     .setVersion('1.0')
     .addTag('auth')
+    .addTag('circuits')
+    .addTag('competitions')
+    .addTag('drivers')
+    .addTag('teams')
+    .addTag('users')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('documentation', app, document);

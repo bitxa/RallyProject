@@ -1,0 +1,50 @@
+.logo-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-label {
+  text-align: center;
+  background-color: #e6e2de;
+  color: #424449;
+  font-weight: bold;
+  width: 50%;
+  padding: 1vh;
+  border-radius: 12px;
+}
+
+.upload-input {
+  display: none;
+}
+
+.preview-container {
+  position: relative;
+  top: 1vh;
+  width: 100%;
+  padding: 2vh !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image {
+  max-width: 90%;
+  height: auto;
+}
+
+.delete-button {
+  align-self: flex-end;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  width: 7%;
+  border-radius: 18px;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}

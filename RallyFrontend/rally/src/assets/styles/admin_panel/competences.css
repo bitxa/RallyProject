@@ -1,4 +1,4 @@
-.competences {
+.container {
   flex-wrap: wrap;
   display: flex;
   flex-direction: row;
@@ -12,7 +12,7 @@
   justify-content: space-between;
 }
 
-.competence {
+.box {
   color: #f9f9f9;
   margin: 3%;
   flex-grow: 2;
@@ -27,7 +27,7 @@
   flex-direction: column;
 }
 
-.new-competence {
+.new {
   color: #f9f2ed;
   display: flex;
   flex-direction: column;
@@ -48,19 +48,20 @@
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none;
+  align-self: self-start;
 }
 
-.new-competence span * {
+.new span * {
   font-size: 2rem;
 }
 
-.new-competence:hover {
+.new:hover {
   box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
     -6px -6px 10px rgba(255, 255, 255, 0.5),
     6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.new-competence:active {
+.new:active {
   box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
     inset -2px -2px 4px rgba(255, 255, 255, 0.5),
     inset 2px 2px 2px rgba(255, 255, 255, 0.075),
@@ -159,4 +160,12 @@ a.wave-link:before {
 }
 a.wave-link:hover .link__graphic--slide {
   transform: translate3d(50%, 0, 0);
+}
+
+span {
+  padding-left: 2vh;
+}
+
+.plus {
+  font-size: 6vh;
 }

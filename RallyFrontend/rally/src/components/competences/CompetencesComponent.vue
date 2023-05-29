@@ -5,7 +5,13 @@
 
   <div class="container">
 
-    <div class="box new">
+
+
+    <div v-if="isFormVisible" class="overlay">
+      <NewCompetence @close="hideForm" />
+    </div>
+
+    <div class="box new" @click="showForm">
       <h2>Nueva competencia</h2>
       <AnFilledPlusCircle class="plus" />
     </div>
@@ -157,11 +163,30 @@
 <script lang="ts">
 import AdminMenuItemHeader from './AdminMenuItemHeader.vue';
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
+import NewCompetence from "@/components/competences/floating-forms/NewCompetence.vue"
 
 export default {
   name: 'CompetencesComponent',
-  components: { AdminMenuItemHeader, AnFilledPlusCircle },
+  components: {
+    AdminMenuItemHeader,
+    AnFilledPlusCircle,
+    NewCompetence
+  },
 
+  data() {
+    return {
+      isFormVisible: false,
+    };
+  },
+
+  methods: {
+    showForm() {
+      this.isFormVisible = true;
+    },
+    hideForm() {
+      this.isFormVisible = false;
+    },
+  },
 };
 
 

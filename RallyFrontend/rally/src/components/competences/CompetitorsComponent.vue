@@ -7,8 +7,6 @@
         <div class="box new">
             <h2>Agregar competidor</h2>
             <AnFilledPlusCircle class="plus" />
-
-
         </div>
 
         <div class="box">

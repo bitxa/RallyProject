@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -12,10 +14,16 @@ import { DriversModule } from './drivers/drivers.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     //! esto mandar a .env
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/products', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('MONGO_URI'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }),
+      inject: [ConfigService],
     }),
     AuthModule,
     UsersModule,

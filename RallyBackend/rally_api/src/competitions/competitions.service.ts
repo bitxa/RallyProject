@@ -11,7 +11,9 @@ export class CompetitionsService {
     @InjectModel(Competition.name)
     private competitionsModule: Model<CompetitionsDocument>,
   ) {}
+
   create(createCompetitionDto: CreateCompetitionDto): Promise<Competition> {
+    console.log(createCompetitionDto);
     return this.competitionsModule.create(createCompetitionDto);
   }
 

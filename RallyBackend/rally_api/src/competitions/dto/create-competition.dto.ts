@@ -1,4 +1,12 @@
-import { IsArray, IsDate, IsNotEmpty, IsString } from 'class-validator';
+/* eslint-disable prettier/prettier */
+import {
+  IsArray,
+  IsDate,
+  IsEmpty,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Circuit } from 'src/circuits/schema/circuit.schema';
 
 export class CreateCompetitionDto {
@@ -22,7 +30,12 @@ export class CreateCompetitionDto {
   @IsString()
   readonly province: string;
 
-  @IsNotEmpty()
+  /*
+   * @IsNotEmpty() replaced with with @IsEmpty()
+   * A competition can be created without any circuit at the beginning.
+   */
+  @IsOptional()
+  @IsEmpty()
   @IsArray()
   readonly circuits: Circuit[];
 }

@@ -64,17 +64,7 @@ export default {
     },
     methods: {
         async submitForm() {
-
-            interface CreateCompetitionDto {
-                name: string;
-                description: string;
-                start_date: any;
-                end_date: any;
-                province: string;
-                circuits?: [];
-            }
-
-            const data: CreateCompetitionDto = {
+            const data = {
                 name: this.name,
                 description: this.description,
                 start_date: new Date(this.date[0]).toISOString(),

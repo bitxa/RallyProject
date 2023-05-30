@@ -3,7 +3,7 @@
 <template>
     <div class="popup">
 
-        </form>
+
 
         <Actions @submit="submitForm" @cancel="cancelForm" />
     </div>

@@ -19,12 +19,12 @@ export class CategoriesService {
     return await this.categoriesModule.find().populate('drivers');
   }
 
-  async findOne(id: number): Promise<Category> {
+  async findOne(id: string): Promise<Category> {
     return await this.categoriesModule.findById(id).populate('drivers');
   }
 
   async update(
-    id: number,
+    id: string,
     updateCategoryDto: UpdateCategoryDto,
   ): Promise<Category> {
     return await this.categoriesModule
@@ -32,7 +32,7 @@ export class CategoriesService {
       .populate('drivers');
   }
 
-  async remove(id: number): Promise<Category> {
+  async remove(id: string): Promise<Category> {
     return await this.categoriesModule
       .findByIdAndDelete(id)
       .populate('drivers');

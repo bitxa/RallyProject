@@ -23,7 +23,7 @@ export class CircuitsService {
     return listCircuits;
   }
 
-  async findOne(id: number): Promise<Circuit> {
+  async findOne(id: string): Promise<Circuit> {
     const circuit = await this.circuitsModule
       .findById(id)
       .populate('sponsor')
@@ -32,7 +32,7 @@ export class CircuitsService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateCircuitDto: UpdateCircuitDto,
   ): Promise<Circuit> {
     const updatedCircuit = await this.circuitsModule
@@ -42,7 +42,7 @@ export class CircuitsService {
     return updatedCircuit;
   }
 
-  async remove(id: number): Promise<Circuit> {
+  async remove(id: string): Promise<Circuit> {
     const deletedCircuit = await this.circuitsModule
       .findByIdAndDelete(id)
       .populate('sponsor')

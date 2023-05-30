@@ -19,17 +19,17 @@ export class DriversService {
     return await this.driversModule.find().populate('categories');
   }
 
-  async findOne(id: number): Promise<Driver> {
+  async findOne(id: string): Promise<Driver> {
     return await this.driversModule.findById(id).populate('categories');
   }
 
-  async update(id: number, updateDriverDto: UpdateDriverDto): Promise<Driver> {
+  async update(id: string, updateDriverDto: UpdateDriverDto): Promise<Driver> {
     return await this.driversModule
       .findByIdAndUpdate(id, updateDriverDto)
       .populate('categories');
   }
 
-  async remove(id: number): Promise<Driver> {
+  async remove(id: string): Promise<Driver> {
     return await this.driversModule
       .findByIdAndDelete(id)
       .populate('categories');

@@ -13,5 +13,5 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsEnum(Role)
-  readonly role: Role = Role.User;
+  readonly role: Role = Role.ADMIN;
 }

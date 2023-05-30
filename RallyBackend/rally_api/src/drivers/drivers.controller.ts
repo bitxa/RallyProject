@@ -29,16 +29,16 @@ export class DriversController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.driversService.findOne(+id);
+    return this.driversService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDriverDto: UpdateDriverDto) {
-    return this.driversService.update(+id, updateDriverDto);
+    return this.driversService.update(id, updateDriverDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.driversService.remove(+id);
+    return this.driversService.remove(id);
   }
 }

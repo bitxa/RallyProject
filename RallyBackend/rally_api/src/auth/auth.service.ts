@@ -11,6 +11,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersDocument, User } from 'src/users/schema/user.schema';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from './rol.enum';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +23,7 @@ export class AuthService {
     const { password } = userObject;
     const plainToHash = await hash(password, 10);
     userObject.password = plainToHash;
+    userObject.role = Role.ADMIN;
     return this.userModel.create(userObject);
   }
 
@@ -38,7 +40,7 @@ export class AuthService {
       throw new UnauthorizedException(HttpException, 'Password Incorrect');
     }
 
-    const payload = { id: findUser._id, name: findUser.name };
+    const payload = { id: findUser._id, role: findUser.role };
     const token = await this.jwtAuthService.signAsync(payload);
 
     const data = {

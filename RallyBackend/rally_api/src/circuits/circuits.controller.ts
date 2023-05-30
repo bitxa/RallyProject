@@ -29,16 +29,16 @@ export class CircuitsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.circuitsService.findOne(+id);
+    return this.circuitsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCircuitDto: UpdateCircuitDto) {
-    return this.circuitsService.update(+id, updateCircuitDto);
+    return this.circuitsService.update(id, updateCircuitDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.circuitsService.remove(+id);
+    return this.circuitsService.remove(id);
   }
 }

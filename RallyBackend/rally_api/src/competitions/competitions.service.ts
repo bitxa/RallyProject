@@ -23,12 +23,12 @@ export class CompetitionsService {
     return await this.competitionsModule.find().populate('circuits');
   }
 
-  async findOne(id: number): Promise<Competition> {
+  async findOne(id: string): Promise<Competition> {
     return await this.competitionsModule.findById(id).populate('circuits');
   }
 
   async update(
-    id: number,
+    id: string,
     updateCompetitionDto: UpdateCompetitionDto,
   ): Promise<Competition> {
     return await this.competitionsModule
@@ -36,7 +36,7 @@ export class CompetitionsService {
       .populate('circuits');
   }
 
-  async remove(id: number): Promise<Competition> {
+  async remove(id: string): Promise<Competition> {
     return await this.competitionsModule
       .findByIdAndDelete(id)
       .populate('circuits');

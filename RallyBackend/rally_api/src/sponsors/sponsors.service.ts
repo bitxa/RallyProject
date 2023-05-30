@@ -19,18 +19,18 @@ export class SponsorsService {
     return await this.sponsorsModule.find();
   }
 
-  async findOne(id: number): Promise<Sponsor> {
+  async findOne(id: string): Promise<Sponsor> {
     return await this.sponsorsModule.findById(id);
   }
 
   async update(
-    id: number,
+    id: string,
     updateSponsorDto: UpdateSponsorDto,
   ): Promise<Sponsor> {
     return await this.sponsorsModule.findByIdAndUpdate(id, updateSponsorDto);
   }
 
-  async remove(id: number): Promise<Sponsor> {
+  async remove(id: string): Promise<Sponsor> {
     return await this.sponsorsModule.findByIdAndDelete(id);
   }
 }

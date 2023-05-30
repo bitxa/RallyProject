@@ -58,7 +58,7 @@ export default {
                 track_lenght: parseFloat(this.track_length),
                 location: this.location
             }
-            console.log('Form submitted:');
+            console.log('Form submitted :');
             console.log(data);
 
             const result = await apiService.postData(data, 'circuits')

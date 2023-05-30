@@ -20,8 +20,6 @@ export class CompetitionsController {
 
   @Post()
   create(@Body() createCompetitionDto: CreateCompetitionDto) {
-    console.log('HOLA');
-    console.log(createCompetitionDto);
     return this.competitionsService.create(createCompetitionDto);
   }
 

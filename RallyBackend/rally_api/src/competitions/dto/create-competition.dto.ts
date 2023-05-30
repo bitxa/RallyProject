@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDate,
+  IsDateString,
   IsEmpty,
   IsNotEmpty,
   IsOptional,
@@ -21,11 +22,11 @@ export class CreateCompetitionDto {
   readonly description: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   readonly start_date: Date;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   readonly end_date: Date;
 
   @IsNotEmpty()

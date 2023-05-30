@@ -1,8 +1,10 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsEmpty,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -18,7 +20,12 @@ export class CreateCircuitDto {
   @IsString()
   readonly description: string;
 
-  @IsNotEmpty()
+  /*
+   * @IsNotEmpty() replaced with with @IsEmpty()
+   * A circuit can be created without any sponsors at the beginning.
+   */
+  @IsOptional()
+  @IsEmpty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Sponsor)
@@ -26,13 +33,18 @@ export class CreateCircuitDto {
 
   @IsNotEmpty()
   @IsNumber()
-  readonly lenght: number;
+  readonly track_lenght: number;
 
   @IsNotEmpty()
   @IsString()
   readonly location: string;
 
-  @IsNotEmpty()
+  /*
+   * @IsNotEmpty() replaced with with @IsEmpty()
+   * A circuit can be created without any categories at the beginning.
+   */
+  @IsOptional()
+  @IsEmpty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Category)

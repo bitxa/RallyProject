@@ -19,6 +19,7 @@ export class CircuitsController {
 
   @Post()
   create(@Body() createCircuitDto: CreateCircuitDto) {
+    console.log(createCircuitDto);
     return this.circuitsService.create(createCircuitDto);
   }
 

@@ -20,8 +20,11 @@ export class Circuit {
   })
   sponsor: Sponsor[];
 
+  /*
+   * 'length' property name refactored to 'track_length'
+   */
   @Prop()
-  lenght: number;
+  track_lenght: number;
 
   @Prop()
   location: string;

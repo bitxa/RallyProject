@@ -12,26 +12,33 @@ export class CompetitionsService {
     private competitionsModule: Model<CompetitionsDocument>,
   ) {}
 
-  create(createCompetitionDto: CreateCompetitionDto): Promise<Competition> {
+  async create(
+    createCompetitionDto: CreateCompetitionDto,
+  ): Promise<Competition> {
     console.log(createCompetitionDto);
-    return this.competitionsModule.create(createCompetitionDto);
+    return await this.competitionsModule.create(createCompetitionDto);
   }
 
-  findAll() {
-    return this.competitionsModule.find().populate('circuits');
+  async findAll(): Promise<Competition[]> {
+    return await this.competitionsModule.find().populate('circuits');
   }
 
-  findOne(id: number) {
-    return this.competitionsModule.findById(id).populate('circuits');
+  async findOne(id: number): Promise<Competition> {
+    return await this.competitionsModule.findById(id).populate('circuits');
   }
 
-  update(id: number, updateCompetitionDto: UpdateCompetitionDto) {
-    return this.competitionsModule
+  async update(
+    id: number,
+    updateCompetitionDto: UpdateCompetitionDto,
+  ): Promise<Competition> {
+    return await this.competitionsModule
       .findByIdAndUpdate(id, updateCompetitionDto)
       .populate('circuits');
   }
 
-  remove(id: number) {
-    return this.competitionsModule.findByIdAndDelete(id).populate('circuits');
+  async remove(id: number): Promise<Competition> {
+    return await this.competitionsModule
+      .findByIdAndDelete(id)
+      .populate('circuits');
   }
 }

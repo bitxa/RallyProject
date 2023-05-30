@@ -20,10 +20,6 @@ export class AuthService {
   ) {}
   async register(userObject: RegisterAuthDto): Promise<User> {
     const { password } = userObject;
-
-    //? Nunca guardar texto plano de contraseñas en la base de datos
-    //? para evitar eso aqui las vamos a encriptar
-
     const plainToHash = await hash(password, 10);
     userObject.password = plainToHash;
     return this.userModel.create(userObject);
@@ -35,7 +31,7 @@ export class AuthService {
     if (!findUser) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    //comparamos con la contraseña que viene en el body mediante bcrypt compare
+
     const isMatch = await compare(password, findUser.password);
     if (!isMatch) {
       // throw new HttpException('Password Incorrect', 403);

@@ -1,24 +1,26 @@
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Circuit } from 'src/circuits/schema/circuit.schema';
+
 import { Driver } from 'src/drivers/schema/driver.schema';
 
 //TODO el schema de los Circuitos
-export type UsersDocument = HydratedDocument<Category>;
+export type CategoriesDocument = HydratedDocument<Category>;
 
 @Schema()
 export class Category {
   @Prop()
   name: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Circuit' })
-  circuits: Circuit[];
+  @Prop()
+  circuits: string;
 
   @Prop()
   description: string;
 
-  @Prop()
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Driver' }],
+  })
   winning_drivers: Driver[];
 
   @Prop({

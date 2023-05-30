@@ -16,25 +16,37 @@ export class CircuitsService {
   }
 
   async findAll(): Promise<Circuit[]> {
-    const listCircuits = await this.circuitsModule.find();
+    const listCircuits = await this.circuitsModule
+      .find()
+      .populate('sponsor')
+      .populate('category');
     return listCircuits;
   }
 
   async findOne(id: number): Promise<Circuit> {
-    const circuit = await this.circuitsModule.findById(id);
+    const circuit = await this.circuitsModule
+      .findById(id)
+      .populate('sponsor')
+      .populate('category');
     return circuit;
   }
 
-  update(id: number, updateCircuitDto: UpdateCircuitDto): Promise<Circuit> {
-    const updatedCircuit = this.circuitsModule.findByIdAndUpdate(
-      id,
-      updateCircuitDto,
-    );
+  async update(
+    id: number,
+    updateCircuitDto: UpdateCircuitDto,
+  ): Promise<Circuit> {
+    const updatedCircuit = await this.circuitsModule
+      .findByIdAndUpdate(id, updateCircuitDto)
+      .populate('sponsor')
+      .populate('category');
     return updatedCircuit;
   }
 
-  remove(id: number): Promise<Circuit> {
-    const deletedCircuit = this.circuitsModule.findByIdAndDelete(id);
+  async remove(id: number): Promise<Circuit> {
+    const deletedCircuit = await this.circuitsModule
+      .findByIdAndDelete(id)
+      .populate('sponsor')
+      .populate('category');
     return deletedCircuit;
   }
 }

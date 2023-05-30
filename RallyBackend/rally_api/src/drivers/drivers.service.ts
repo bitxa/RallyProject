@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Driver, DriverDocument } from './schema/driver.schema';
 
 @Injectable()
 export class DriversService {
-  create(createDriverDto: CreateDriverDto) {
-    return 'This action adds a new driver';
+  constructor(
+    @InjectModel(Driver.name)
+    private driversModule: Model<DriverDocument>,
+  ) {}
+  async create(createDriverDto: CreateDriverDto): Promise<Driver> {
+    return await this.driversModule.create(createDriverDto);
   }
 
-  findAll() {
-    return `This action returns all drivers`;
+  async findAll(): Promise<Driver[]> {
+    return await this.driversModule.find().populate('categories');
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driver`;
+  async findOne(id: number): Promise<Driver> {
+    return await this.driversModule.findById(id).populate('categories');
   }
 
-  update(id: number, updateDriverDto: UpdateDriverDto) {
-    return `This action updates a #${id} driver`;
+  async update(id: number, updateDriverDto: UpdateDriverDto): Promise<Driver> {
+    return await this.driversModule
+      .findByIdAndUpdate(id, updateDriverDto)
+      .populate('categories');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driver`;
+  async remove(id: number): Promise<Driver> {
+    return await this.driversModule
+      .findByIdAndDelete(id)
+      .populate('categories');
   }
 }

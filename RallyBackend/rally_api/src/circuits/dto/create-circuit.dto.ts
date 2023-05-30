@@ -1,4 +1,11 @@
-import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Category } from 'src/categories/schema/category.schema';
 import { Sponsor } from 'src/sponsors/schema/sponsor.schema';
 
@@ -13,6 +20,8 @@ export class CreateCircuitDto {
 
   @IsNotEmpty()
   @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Sponsor)
   readonly sponsor: Sponsor[];
 
   @IsNotEmpty()
@@ -25,5 +34,7 @@ export class CreateCircuitDto {
 
   @IsNotEmpty()
   @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Category)
   readonly categories: Category[];
 }

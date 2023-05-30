@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDate,
@@ -6,6 +7,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 import { Circuit } from 'src/circuits/schema/circuit.schema';
 
@@ -37,5 +39,7 @@ export class CreateCompetitionDto {
   @IsOptional()
   @IsEmpty()
   @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Circuit)
   readonly circuits: Circuit[];
 }

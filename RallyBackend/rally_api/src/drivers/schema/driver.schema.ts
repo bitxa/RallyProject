@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { Category } from 'src/categories/schema/category.schema';
 
 export type DriverDocument = HydratedDocument<Driver>;
 
@@ -27,7 +28,7 @@ export class Driver {
   city: string;
 
   @Prop()
-  current_category: string;
+  current_category: Category;
 }
 
 export const DriversSchema = SchemaFactory.createForClass(Driver);

@@ -46,34 +46,5 @@ form .field input {
   border: 1px solid #e6e6ec;
   padding: 10px;
   outline: none;
-}
-
-.popup .actions {
-  margin-top: 2vh;
-  margin-bottom: 3vh;
-  justify-content: space-evenly;
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-}
-
-.popup .actions button {
-  font-size: small;
-  color: white;
-  width: 20%;
-  border-style: none;
-  border-radius: 12px;
-  padding: 1vh;
-}
-
-#create {
-  background-color: #03c988;
-}
-
-#cancel {
-  background-color: #db005b;
-}
-
-.popup .actions button:active {
-  width: 22%;
+  text-transform: uppercase;
 }

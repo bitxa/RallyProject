@@ -4,12 +4,17 @@
     <AdminMenuItemHeader header_title="Circuitos" />
 
     <div class="container">
-        <div class="box new">
 
-            <h2>Agregar circuito</h2>
-            <AnFilledPlusCircle class="plus" />
-
+        <div v-if="isFormVisible" class="overlay">
+            <NewCircuit @close="hideForm" />
         </div>
+
+        <div class="box new" @click="showForm">
+            <h2>Agregar Circuito</h2>
+            <AnFilledPlusCircle class="plus" />
+        </div>
+
+
         <div class="box">
             <span>
                 <h2>Circuito Catamayo</h2>
@@ -63,12 +68,30 @@
 <script lang="ts">
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 import AdminMenuItemHeader from './AdminMenuItemHeader.vue';
-
+import NewCircuit from "@/components/competences/floating-forms/NewCircuit.vue";
 
 export default {
     name: 'CompetencesComponent',
-    components: { AnFilledPlusCircle, AdminMenuItemHeader },
-};
+    components: {
+        AdminMenuItemHeader,
+        AnFilledPlusCircle,
+        NewCircuit
+    },
 
+    data() {
+        return {
+            isFormVisible: false,
+        };
+    },
+
+    methods: {
+        showForm() {
+            this.isFormVisible = true;
+        },
+        hideForm() {
+            this.isFormVisible = false;
+        },
+    },
+};
 </script>
 

@@ -2,7 +2,7 @@
 
 <template>
     <div class="popup">
-        <h2>Competencia nueva</h2>
+        <h2>Crear competencia</h2>
         <!-- Form fields and inputs here -->
         <form @submit.prevent="submitForm">
             <div class="field">
@@ -12,7 +12,7 @@
 
             <div class="field">
                 <label for="province">Provincia:</label>
-                <input type="text" id="provincia" v-model="province" required>
+                <input type="text" id="province" v-model="province" required>
             </div>
 
             <div class="field">
@@ -27,19 +27,20 @@
 
         </form>
 
-        <div class="actions">
-            <button type="submit" id="create" @click="submitForm">Crear</button>
-            <button type="button" id="cancel" @click="cancelForm">Cancelar</button>
-        </div>
+        <Actions @submit="submitForm" @cancel="cancelForm" />
     </div>
 </template>
 
 <script lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import ActionsComponent from './ActionsComponent.vue';
+
+import Actions from "@/components/competences/floating-forms/ActionsComponent.vue";
+
 import { ref, onMounted } from 'vue';
 import { apiService } from '@/services/apiService';
-import { formatDate } from '@/utils/DateFormatter';
+
 
 const date = ref();
 
@@ -51,7 +52,7 @@ onMounted(() => {
 
 export default {
 
-    components: { VueDatePicker },
+    components: { VueDatePicker, Actions },
     name: 'NewCompetence',
     data() {
         return {
@@ -63,11 +64,12 @@ export default {
     },
     methods: {
         async submitForm() {
+
             interface CreateCompetitionDto {
                 name: string;
                 description: string;
-                start_date: Date;
-                end_date: Date;
+                start_date: any;
+                end_date: any;
                 province: string;
                 circuits?: [];
             }
@@ -75,15 +77,16 @@ export default {
             const data: CreateCompetitionDto = {
                 name: this.name,
                 description: this.description,
-                start_date: new Date(this.date[0]),
-                end_date: new Date(this.date[1]),
+                start_date: new Date(this.date[0]).toISOString(),
+                end_date: new Date(this.date[1]).toISOString(),
                 province: this.province,
             }
 
             console.log('Form submitted:');
             console.log(data);
-            const result = await apiService.postData(data, 'competitions')
-            console.log(result);
+
+            await apiService.postData(data, 'competitions')
+
             this.$emit('close');
         },
         cancelForm() {

@@ -5,14 +5,12 @@
 
   <div class="container">
 
-
-
     <div v-if="isFormVisible" class="overlay">
       <NewCompetence @close="hideForm" />
     </div>
 
     <div class="box new" @click="showForm">
-      <h2>Nueva competencia</h2>
+      <h2>Agregar competencia</h2>
       <AnFilledPlusCircle class="plus" />
     </div>
 

@@ -7,13 +7,13 @@ export class SocketClient implements OnModuleInit {
   public clientID: string;
 
   constructor() {
-    this.socketClient = io('http://localhost:3000');
+    this.socketClient = io('ws://localhost:3001');
   }
 
   onModuleInit() {
     this.consumeEvent();
     this.test();
-    this.clientID = '01';
+    this.clientID = 'entrada';
   }
 
   emitTime(time: string) {
@@ -25,11 +25,12 @@ export class SocketClient implements OnModuleInit {
 
   test() {
     setInterval(() => {
-      const now = new Date();
-      this.emitTime(
-        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
-      );
-    }, 2000);
+      // example: 2023-06-02T12:15:23.293Z
+      const currentTime = new Date().toISOString();
+      const timeString = currentTime.split('T')[1].slice(0, -1);
+
+      this.emitTime(timeString);
+    }, 4000);
   }
 
   consumeEvent() {

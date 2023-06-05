@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { OnModuleInit } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services/logger.service';
 import {
@@ -29,12 +28,18 @@ export class MessageGateway implements OnModuleInit {
 
   @SubscribeMessage('newMessage')
   onNewMessage(@MessageBody() body: any) {
+    // body.time must have ISO 8601 format
+    const [hours, minutes, seconds, milliseconds] = body.time.split(/:|\./);
+
+    //(HH:MM:SS:MSS)
+    const formattedTime = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+
     console.log('COLLECTED MESSAGE');
     console.log(`from: ${body.id}`);
-    console.log(`time: ${body.time}`);
+    console.log(`time: ${formattedTime}`);
     this.server.emit('onMessage', {
       id: body.id,
-      time: body.time,
+      time: formattedTime,
     });
   }
 }

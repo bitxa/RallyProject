@@ -1,3 +1,5 @@
+@import "../main.css";
+
 .times {
   max-width: 100%;
   min-height: 100vh;
@@ -8,7 +10,7 @@
 
 .time {
   height: auto;
-  background-color: #d61c4e;
+  background-color: var(--secondary_background_color_dark);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -24,11 +26,11 @@
 
 .time h1 {
   font-size: 15vh;
-  color: #e6e2de;
+  color: var(--fontcolor_dark);
 }
 
 strong {
-  color: #e6e2de;
+  color: var(--fontcolor_dark);
 }
 
 .time p {
@@ -37,7 +39,7 @@ strong {
 }
 
 .time h2 {
-  color: #e6e2de;
+  color: var(--fontcolor_dark);
   margin: 0%;
   padding: 0%;
 }
@@ -47,14 +49,14 @@ strong {
   font-size: small;
   font-weight: 600;
   border-style: none;
-  background-color: #424449;
-  color: #e6e2de;
+  background-color: var(--backgroundcolor_dark);
+  color: var(--fontcolor_dark);
   border-radius: 12px;
   height: 4vh;
   width: 20%;
 }
 
 .time button:hover {
-  color: #424449;
-  background-color: #e6e2de;
+  color: var(--backgroundcolor_dark);
+  background-color: var(--input_backgroundcolor_dark);
 }

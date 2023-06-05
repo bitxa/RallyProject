@@ -1,20 +1,24 @@
+@import "../main.css";
+
 .admin-panel {
   display: flex;
   height: 100vh;
-  background-color: #242529;
+  background-color: var(--backgroundcolor_dark);
 }
 
 aside {
+  display: flex;
   flex: 0 0 25%;
   top: 0;
   position: sticky;
-  display: flex;
   flex-direction: column;
   min-height: 100%;
-  background-color: #242529;
+  background-color: var(--backgroundcolor_dark);
   border-right: 0.3vh solid #424449;
   align-items: center;
-  color: #e6e2de;
+  color: var(--fontcolor_dark);
+  min-height: 100vh;
+  overflow-y: scroll;
 }
 
 main {
@@ -22,7 +26,7 @@ main {
   min-height: 100vh;
   height: auto;
   overflow: auto !important;
-  background-color: #242529;
+  background-color: var(--backgroundcolor_dark);
 }
 
 li {
@@ -32,10 +36,10 @@ li {
 }
 
 .rally_logo {
-  width: 50vh;
+  width: 40vh;
   height: auto;
   margin: 3vh;
-  color: white;
+  color: var(--fontcolor_dark);
 }
 
 .user {
@@ -78,13 +82,14 @@ li {
   flex-direction: row;
   align-items: center;
   text-align: center;
-  width: 60%;
+  width: 80%;
   height: auto;
-  color: #f9f2ed;
-  font-size: 2vh;
+  color: var(--fontcolor_dark);
+  font-size: 2.2vh;
   border-radius: 15px;
+  margin: 1vh;
   border-style: none;
-  background-color: #363538;
+  background-color: var(--menu_buttoncolor_dark);
 }
 .menu button span {
   width: 50%;
@@ -100,9 +105,64 @@ li {
 
 .menu_button:hover {
   transition-duration: 0.2s;
-  background-color: #cd104d;
+  background-color: var(--secondary_background_color_dark);
 }
 
 .menu_button.active {
-  background-color: #cd104d;
+  background-color: var(--secondary_background_color_dark);
+}
+
+.menu-toggle-button {
+  position: absolute;
+  margin: 1vh;
+  z-index: 100;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-icon {
+  margin: 0%;
+  padding: 0%;
+  display: none;
+  color: var(--secondary_background_color_dark);
+  font-size: 2rem;
+  width: 6vh;
+  border-radius: 5vh;
+  transition: background-color 1s ease;
+}
+
+.menu-icon-active {
+  display: block;
+}
+
+.menu-icon-active:hover {
+  background-color: var(--fontcolor_dark);
+}
+
+.hide-menu {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+main {
+  transition: width 0.3s ease;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/*MEDIA QUERIES*/
+@media (max-width: 768px) {
+  .admin-panel {
+    border-right: none;
+    flex-direction: column;
+  }
+
+  aside {
+    flex: 1;
+    width: 100%;
+    border-right: none;
+  }
 }

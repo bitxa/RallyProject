@@ -1,4 +1,4 @@
-<style scoped src="@/assets/styles/admin_panel/floating-forms/new.css"></style>
+<style scoped src="@/assets/styles/admin_panel/floating-forms/new_form.css"></style>
 
 <template>
     <div class="popup">
@@ -27,20 +27,22 @@
             </div>
         </form>
 
-        <Actions @submit="submitForm" @cancel="cancelForm" />
+        <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
+        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false" />
+
     </div>
 </template>
 
 <script lang="ts">
 
-import Actions from "@/components/competences/floating-forms/ActionsComponent.vue";
+import Actions from "@/components/competences/floating-forms/fragments/ActionsComponent.vue";
+import ConfirmationDialog from "@/components/competences/floating-forms/fragments/ConfirmationDialog.vue";
 
 import { apiService } from '@/services/apiService';
 
 
 export default {
-
-    components: { Actions },
+    components: { Actions, ConfirmationDialog },
     name: 'NewCompetence',
     data() {
         return {
@@ -48,6 +50,7 @@ export default {
             description: '',
             track_length: '',
             location: '',
+            showConfirmationDialog: false,
         };
     },
     methods: {
@@ -71,10 +74,18 @@ export default {
             this.$emit('close');
         },
 
-        restrictToNumeric() {
-            // Remove non-numeric characters from the input value
-            this.track_length = this.track_length.replace(/[^0-9.]/g, '');
+        restrictToNumeric() { this.track_length = this.track_length.replace(/[^0-9.]/g, '') },
+
+        showConfirmation() {
+            this.showConfirmationDialog = true;
         },
+
+        closeConfirmation() {
+            this.showConfirmationDialog = false;
+        },
+
+
     }
 }
 </script>
+ç

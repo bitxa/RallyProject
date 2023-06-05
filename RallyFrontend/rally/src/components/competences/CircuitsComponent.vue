@@ -1,19 +1,23 @@
-<style scoped src="@/assets/styles/admin_panel/competences.css"></style>
+<style src="@/assets/styles/admin_panel/entity_data.css"></style>
 
 <template>
-    <AdminMenuItemHeader header_title="Circuitos" />
+    <AdminMenuItemHeader header_title="Circuitos" :listing_data="[]" :placeholder="'Busque algún circuito:'" />
+
+    <v-col cols="auto" class="new-box-container">
+        <v-btn size="x-large" class="new-box" @click="showForm" rounded>
+            <h2>Crear circuito</h2>
+            <v-icon left>
+                <AnFilledPlusCircle class="plus" />
+            </v-icon>
+        </v-btn>
+    </v-col>
+
 
     <div class="container">
 
         <div v-if="isFormVisible" class="overlay">
             <NewCircuit @close="hideForm" />
         </div>
-
-        <div class="box new" @click="showForm">
-            <h2>Agregar Circuito</h2>
-            <AnFilledPlusCircle class="plus" />
-        </div>
-
 
         <div class="box">
             <span>
@@ -67,7 +71,7 @@
 
 <script lang="ts">
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
-import AdminMenuItemHeader from './AdminMenuItemHeader.vue';
+import AdminMenuItemHeader from './fragments/AdminMenuItemHeader.vue';
 import NewCircuit from "@/components/competences/floating-forms/NewCircuit.vue";
 
 export default {

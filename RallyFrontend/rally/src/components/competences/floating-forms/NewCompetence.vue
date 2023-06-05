@@ -1,4 +1,4 @@
-<style scoped src="@/assets/styles/admin_panel/floating-forms/new.css"></style>
+<style scoped src="@/assets/styles/admin_panel/floating-forms/new_form.css"></style>
 
 <template>
     <div class="popup">
@@ -27,16 +27,18 @@
 
         </form>
 
-        <Actions @submit="submitForm" @cancel="cancelForm" />
+        <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
+        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false" />
+
     </div>
 </template>
 
 <script lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
-import ActionsComponent from './ActionsComponent.vue';
 
-import Actions from "@/components/competences/floating-forms/ActionsComponent.vue";
+import Actions from "@/components/competences/floating-forms/fragments/ActionsComponent.vue";
+import ConfirmationDialog from "@/components/competences/floating-forms/fragments/ConfirmationDialog.vue";
 
 import { ref, onMounted } from 'vue';
 import { apiService } from '@/services/apiService';
@@ -52,7 +54,7 @@ onMounted(() => {
 
 export default {
 
-    components: { VueDatePicker, Actions },
+    components: { VueDatePicker, Actions, ConfirmationDialog },
     name: 'NewCompetence',
     data() {
         return {
@@ -60,6 +62,7 @@ export default {
             province: '',
             description: '',
             date: date,
+            showConfirmationDialog: false,
         };
     },
     methods: {
@@ -79,9 +82,20 @@ export default {
 
             this.$emit('close');
         },
+
         cancelForm() {
+            console.log('Form cancelled:');
             this.$emit('close');
-        }
+        },
+
+        showConfirmation() {
+            this.showConfirmationDialog = true;
+        },
+
+        closeConfirmation() {
+            this.showConfirmationDialog = false;
+        },
+
     }
 }
 </script>

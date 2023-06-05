@@ -1,6 +1,6 @@
 <template>
     <div class="actions">
-        <button type="submit" id="create" @click="submitForm">Crear</button>
+        <button type="submit" id="create" @click="acceptForm">Crear</button>
         <button type="button" id="cancel" @click="cancelForm">Cancelar</button>
     </div>
 </template>
@@ -9,8 +9,8 @@
 export default {
     name: "Actions",
     methods: {
-        submitForm() {
-            this.$emit('submit');
+        acceptForm() {
+            this.$emit('accept');
         },
         cancelForm() {
             this.$emit('cancel');
@@ -32,10 +32,11 @@ export default {
 .actions button {
     font-size: small;
     color: white;
-    width: 20%;
+    width: 28%;
     border-style: none;
-    border-radius: 12px;
-    padding: 1vh;
+    border-radius: 15px;
+    font-size: 1.1em;
+    padding: 1.5vh;
 }
 
 #create {

@@ -1,12 +1,20 @@
-<style scoped src="@/assets/styles/admin_panel/competences.css"></style>
+<style src="@/assets/styles/admin_panel/entity_data.css"></style>
 
 <template>
-    <AdminMenuItemHeader header_title="Competidores" />
+    <AdminMenuItemHeader header_title="Competidores" :listing_data="[]" :placeholder="'Busque algún competidor:'" />
+
+    <v-col cols="auto" class="new-box-container">
+        <v-btn size="x-large" class="new-box" @click="showForm" rounded>
+            <h2>Añadir competidor</h2>
+            <v-icon left>
+                <AnFilledPlusCircle class="plus" />
+            </v-icon>
+        </v-btn>
+    </v-col>
 
     <div class="container">
-        <div class="box new">
-            <h2>Agregar competidor</h2>
-            <AnFilledPlusCircle class="plus" />
+        <div v-if="isFormVisible" class="overlay">
+            <NewCompetitor @close="hideForm" />
         </div>
 
         <div class="box">
@@ -55,13 +63,29 @@
 </template>
 
 <script lang="ts">
-import AdminMenuItemHeader from './AdminMenuItemHeader.vue';
+import AdminMenuItemHeader from './fragments/AdminMenuItemHeader.vue';
+
+import NewCompetitor from "@/components/competences/floating-forms/NewCompetitor.vue"
+
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 
 export default {
     name: 'CompetitorsComponent',
-    components: { AdminMenuItemHeader, AnFilledPlusCircle },
+    components: { AdminMenuItemHeader, AnFilledPlusCircle, NewCompetitor },
+    data() {
+        return {
+            isFormVisible: false,
+        };
+    },
 
+    methods: {
+        showForm() {
+            this.isFormVisible = true;
+        },
+        hideForm() {
+            this.isFormVisible = false;
+        },
+    },
 };
 
 

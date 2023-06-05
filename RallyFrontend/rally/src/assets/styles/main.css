@@ -1,10 +1,22 @@
 @import "./base.css";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap");
+
+:root {
+  /*Darkmode*/
+  --backgroundcolor_dark: #242529 !important;
+  --fontcolor_dark: #e6e2de;
+  --input_backgroundcolor_dark: #ffffff;
+  --menu_buttoncolor_dark: #363538;
+  --input_bordercolor_dark: #e6e6ec;
+  --input_bordercolor_dark: #e6e6ec;
+  --secondary_input_bordercolor_dark: #d61c4e;
+  --secondary_background_color_dark: #cd104d;
+}
 
 #app {
   width: 100%;
   min-height: 100vh;
   font-weight: normal;
-  background-color: #242529;
 }
 
 html,
@@ -13,6 +25,7 @@ body {
   height: 100%;
   padding: 0%;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 li {

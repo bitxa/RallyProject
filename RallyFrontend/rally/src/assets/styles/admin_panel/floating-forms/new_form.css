@@ -1,7 +1,7 @@
 .popup {
   display: flex;
   flex-direction: column;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--input_backgroundcolor_dark);
   width: 50%;
   min-height: 50vh;
   height: auto;
@@ -9,6 +9,10 @@
   padding-top: 1.2vh;
   border-radius: 12px;
   text-align: center;
+}
+
+.popup h2 {
+  padding: 2vh;
 }
 
 form {
@@ -43,7 +47,7 @@ form .field input {
   margin-left: 1px;
   border: none;
   border-radius: 20px;
-  border: 1px solid #e6e6ec;
+  border: 1px solid var(--input_bordercolor_dark);
   padding: 10px;
   outline: none;
   text-transform: uppercase;

@@ -2,11 +2,11 @@
 
 
 <template>
-    <AdminMenuItemHeader header_title="Sponsors" :listing_data="[]" :placeholder="'Busque algún sponsor:'" />
+    <AdminMenuItemHeader header_title="Equipos" :listing_data="[]" :placeholder="'Busque algún equipo:'" />
 
     <v-col cols="auto" class="new-box-container">
         <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Añadir sponsor</h2>
+            <h2>Crear equipo</h2>
             <v-icon left>
                 <AnFilledPlusCircle class="plus" />
             </v-icon>
@@ -57,7 +57,7 @@ import NewSponsor from "@/components/competences/floating-forms/NewSponsor.vue";
 import ImagePicker from "@/components/competences/floating-forms/fragments/ImagePicker.vue";
 
 export default {
-    name: 'SponsorsComponent',
+    name: 'TeamsComponent',
     components: { AdminMenuItemHeader, AnFilledPlusCircle, NewSponsor, ImagePicker },
 
     data() {

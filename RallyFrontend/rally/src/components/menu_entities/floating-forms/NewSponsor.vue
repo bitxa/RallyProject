@@ -37,8 +37,8 @@
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
-import Actions from "@/components/competences/floating-forms/fragments/ActionsComponent.vue";
-import ImagePicker from "@/components/competences/floating-forms/fragments/ImagePicker.vue";
+import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
+import ImagePicker from "@/components/menu_entities/floating-forms/fragments/ImagePicker.vue";
 
 import { apiService } from '@/services/apiService';
 

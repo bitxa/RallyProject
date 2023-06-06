@@ -2,11 +2,11 @@
 
 
 <template>
-    <AdminMenuItemHeader header_title="Sponsors" :listing_data="[]" :placeholder="'Busque algún sponsor:'" />
+    <AdminMenuItemHeader header_title="Equipos" :listing_data="[]" :placeholder="'Busque algún equipo:'" />
 
     <v-col cols="auto" class="new-box-container">
         <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Añadir sponsor</h2>
+            <h2>Crear equipo</h2>
             <v-icon left>
                 <AnFilledPlusCircle class="plus" />
             </v-icon>
@@ -20,29 +20,38 @@
 
         <div class="box">
             <div class="info-element" style="align-items: center;">
-                <h2>Rally 2020</h2>
+                <h2>Equipo A</h2>
             </div>
 
             <div class="info-element">
-                <h2>Descripción</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas possimus deleniti sunt inventore atque
-                    vitae accusantium, totam at autem veritatis earum nostrum quo molestias velit, cum aliquid cupiditate
-                    laudantium. Amet.</p>
+                <h2>Número vehículo:</h2>
+                <p>289</p>
             </div>
 
             <div class="info-element">
-                <h2>Logo</h2>
-                <ImagePicker @imageSelected="handleImageSelected"></ImagePicker>
-
+                <h2>Número vehículo:</h2>
+                <p>289</p>
             </div>
 
             <div class="info-element">
-                <h2>Sitio Web (URL):</h2>
-                <a href="http://cocacola.com">
-                    http://cocacola.com
-                </a>
+                <h2>Nombre conductor:</h2>
+                <p>Joel Sebastian Romero Cañar</p>
             </div>
 
+            <div class="info-element">
+                <h2>Nombre copiloto:</h2>
+                <p>Joel Sebastian Romero Cañar</p>
+            </div>
+
+            <div class="info-element">
+                <h2>Categoria actual:</h2>
+                <p>Categoria B</p>
+            </div>
+
+            <div class="info-element">
+                <h2>Resultados:</h2>
+                <p>Categoria B</p>
+            </div>
         </div>
 
 
@@ -50,15 +59,14 @@
 </template>
 
 <script lang="ts">
-import AdminMenuItemHeader from './fragments/AdminMenuItemHeader.vue';
+
+import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 
-import NewSponsor from "@/components/competences/floating-forms/NewSponsor.vue";
-import ImagePicker from "@/components/competences/floating-forms/fragments/ImagePicker.vue";
 
 export default {
-    name: 'SponsorsComponent',
-    components: { AdminMenuItemHeader, AnFilledPlusCircle, NewSponsor, ImagePicker },
+    name: 'TeamsComponent',
+    components: { AnFilledPlusCircle, AdminMenuItemHeader },
 
     data() {
         return {

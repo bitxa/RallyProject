@@ -42,15 +42,7 @@
 
             <div class="info-element">
                 <h2>Sponsors</h2>
-                <p><a href="#" class="wave-link">Ver sponsors
-                        <svg class="link__graphic link__graphic--slide" width="300%" height="100%" viewBox="0 0 1200 60"
-                            preserveAspectRatio="none">
-                            <path
-                                d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0">
-                            </path>
-                        </svg>
-                    </a>
-                </p>
+                <LinkWithAnimation :message="'Ver Sponsors'" />
             </div>
 
             <div class="info-element">
@@ -71,15 +63,18 @@
 
 <script lang="ts">
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
-import AdminMenuItemHeader from './fragments/AdminMenuItemHeader.vue';
-import NewCircuit from "@/components/competences/floating-forms/NewCircuit.vue";
+import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
+import NewCircuit from "@/components/menu_entities/floating-forms/NewCircuit.vue";
+import LinkWithAnimation from "@/components/menu_entities/fragments/LinkWithAnimation.vue";
+
 
 export default {
-    name: 'CompetencesComponent',
+    name: 'CategoriesComponent',
     components: {
-        AdminMenuItemHeader,
         AnFilledPlusCircle,
-        NewCircuit
+        AdminMenuItemHeader,
+        NewCircuit,
+        LinkWithAnimation
     },
 
     data() {

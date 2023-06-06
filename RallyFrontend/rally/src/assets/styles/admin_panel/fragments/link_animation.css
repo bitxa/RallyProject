@@ -1,0 +1,61 @@
+@import "../../main.css";
+
+a {
+  position: relative;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  color: var(--fontcolor_dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  transition: clip-path 1000ms ease-out;
+}
+
+a.wave-link {
+  cursor: pointer;
+  font-size: 18px;
+  position: relative;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  overflow: hidden;
+  padding: 7px 0;
+}
+a.wave-link:before {
+  content: "";
+  background: var(--input_bordercolor_dark);
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  top: 100%;
+  left: 0;
+  pointer-events: none;
+}
+.link__graphic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  fill: none;
+  stroke: var(--input_bordercolor_dark);
+  stroke-width: 1px;
+}
+.link__graphic--slide {
+  top: -3px;
+  stroke-width: 2px;
+  transition: transform 0.7s;
+  transition-timing-function: cubic-bezier(3, 0.25, 0.5, 1);
+}
+a.wave-link:hover .link__graphic--slide {
+  transform: translate3d(50%, 0, 0);
+}

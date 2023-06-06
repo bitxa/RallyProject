@@ -63,11 +63,12 @@
 </template>
 
 <script lang="ts">
-import AdminMenuItemHeader from './fragments/AdminMenuItemHeader.vue';
-
-import NewCompetitor from "@/components/competences/floating-forms/NewCompetitor.vue"
 
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
+
+import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
+import NewCompetitor from "@/components/menu_entities/floating-forms/NewCompetitor.vue"
+
 
 export default {
     name: 'CompetitorsComponent',

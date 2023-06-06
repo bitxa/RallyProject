@@ -35,8 +35,8 @@
 
 <script lang="ts">
 
-import Actions from "@/components/competences/floating-forms/fragments/ActionsComponent.vue";
-import ConfirmationDialog from "@/components/competences/floating-forms/fragments/ConfirmationDialog.vue";
+import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
+import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 
 import { apiService } from '@/services/apiService';
 

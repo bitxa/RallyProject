@@ -2,11 +2,11 @@
 
 
 <template>
-    <AdminMenuItemHeader header_title="Equipos" :listing_data="[]" :placeholder="'Busque algún equipo:'" />
+    <AdminMenuItemHeader header_title="Sponsors" :listing_data="[]" :placeholder="'Busque algún sponsor:'" />
 
     <v-col cols="auto" class="new-box-container">
         <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Crear equipo</h2>
+            <h2>Añadir sponsor</h2>
             <v-icon left>
                 <AnFilledPlusCircle class="plus" />
             </v-icon>
@@ -50,14 +50,15 @@
 </template>
 
 <script lang="ts">
-import AdminMenuItemHeader from './fragments/AdminMenuItemHeader.vue';
+
+import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
 import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 
-import NewSponsor from "@/components/competences/floating-forms/NewSponsor.vue";
-import ImagePicker from "@/components/competences/floating-forms/fragments/ImagePicker.vue";
+import NewSponsor from "@/components/menu_entities/floating-forms/NewSponsor.vue";
+import ImagePicker from "@/components/menu_entities/floating-forms/fragments/ImagePicker.vue";
 
 export default {
-    name: 'TeamsComponent',
+    name: 'SponsorsComponent',
     components: { AdminMenuItemHeader, AnFilledPlusCircle, NewSponsor, ImagePicker },
 
     data() {

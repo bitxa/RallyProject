@@ -81,6 +81,16 @@
                     </span>
                 </button>
 
+                <button type="button" class="menu_button" @click="selectMenuItem('categories')"
+                    :class="{ active: currentComponent === 'CategoriesComponent' }">
+                    <span>
+                        <FlFilledPeopleTeam class="menu_icon" />
+                    </span>
+                    <span>
+                        <p> Categorias </p>
+                    </span>
+                </button>
+
             </div>
             <v-switch v-model="lightMode" label="Dark Mode" inset @change="toggleDarkMode"></v-switch>
 
@@ -103,12 +113,13 @@ import { CaLocationCompanyFilled } from "@kalimahapps/vue-icons";
 import { FaRoad } from "@kalimahapps/vue-icons";
 import { ChMenuHamburger } from "@kalimahapps/vue-icons";
 
-import CompetitionComponent from "@/components/competences/CompetitionComponent.vue";
-import TimesComponent from "@/components/competences/TimesComponent.vue";
-import CircuitsComponent from "@/components/competences/CircuitsComponent.vue";
-import CompetitorsComponent from "@/components/competences/CompetitorsComponent.vue";
-import SponsorsComponent from "@/components/competences/SponsorsComponent.vue";
-import TeamsComponent from "@/components/competences/TeamsComponent.vue";
+import CompetitionComponent from "@/components/menu_entities/CompetitionComponent.vue";
+import TimesComponent from "@/components/menu_entities/TimesComponent.vue";
+import CircuitsComponent from "@/components/menu_entities/CircuitsComponent.vue";
+import CompetitorsComponent from "@/components/menu_entities/CompetitorsComponent.vue";
+import SponsorsComponent from "@/components/menu_entities/SponsorsComponent.vue";
+import TeamsComponent from "@/components/menu_entities/TeamsComponent.vue";
+import CategoriesComponent from "@/components/menu_entities/TeamsComponent.vue";
 
 
 export default {
@@ -127,6 +138,7 @@ export default {
         CompetitorsComponent,
         SponsorsComponent,
         TeamsComponent,
+        CategoriesComponent,
     },
     data() {
         return {
@@ -149,6 +161,9 @@ export default {
                     this.currentComponent = 'CircuitsComponent';
                     break;
                 case 'competitors':
+                    this.currentComponent = 'CompetitorsComponent';
+                    break;
+                case 'categories':
                     this.currentComponent = 'CompetitorsComponent';
                     break;
                 case 'sponsors':

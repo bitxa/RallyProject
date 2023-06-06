@@ -1,4 +1,4 @@
-<style scoped src="@/assets/styles/admin_panel/menu_item_header.css"></style>
+<style scoped src="@/assets/styles/admin_panel/fragments/menu_item_header.css"></style>
 
 <template>
     <div class="header">

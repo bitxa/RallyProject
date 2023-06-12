@@ -47,14 +47,10 @@ export default {
             });
 
             socketIO.socket.on("onMessage", (data: Time) => {
-
                 console.log("Received message:", data);
                 times.value.push(data);
-                // * TODO: uncomment this line
-                //localStorage.setItem('times', JSON.stringify(times.value));
 
-                // * TODO: remove this line
-                localStorage.setItem('times', "");
+                localStorage.setItem('times', JSON.stringify(times.value));
 
             });
         });

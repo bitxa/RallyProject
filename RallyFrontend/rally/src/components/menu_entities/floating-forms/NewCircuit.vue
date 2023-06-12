@@ -28,8 +28,8 @@
         </form>
 
         <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
-        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false" />
-
+        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
+            :dialog="'¿Seguro que deseas agrear un nuevo circuito?'" @cancel="closeConfirmation" />
     </div>
 </template>
 
@@ -38,6 +38,7 @@
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 
+import { competitionStore } from '@/stores/competitionStore';
 import { apiService } from '@/services/apiService';
 
 
@@ -46,11 +47,11 @@ export default {
     name: 'NewCompetence',
     data() {
         return {
+            showConfirmationDialog: false,
             name: '',
             description: '',
             track_length: '',
             location: '',
-            showConfirmationDialog: false,
         };
     },
     methods: {
@@ -62,7 +63,6 @@ export default {
                 location: this.location
             }
 
-            console.log('Form submitted:');
             console.log(data);
 
             const result = await apiService.postData(data, 'circuits')

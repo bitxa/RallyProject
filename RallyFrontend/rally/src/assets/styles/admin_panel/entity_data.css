@@ -113,6 +113,23 @@
   font-size: large;
   width: auto;
   margin: 1vh;
+  margin-right: 0;
+}
+.delete-button {
+  color: aliceblue;
+  margin: 0;
+  padding: 0%;
+  padding-bottom: 5vh;
+  font-size: 5vh;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+.action_buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .overlay {
@@ -128,4 +145,37 @@
   z-index: 99;
   padding: 5vh;
   overflow-x: scroll;
+}
+
+.breadcrumb {
+  color: var(--fontcolor_dark);
+  padding: 0%;
+  margin: 0%;
+  font-size: 2.5vh;
+  background-color: var(--secondary_background_color_dark);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.breadcrumb .item {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.breadcrumbLabel {
+  margin: 1vh;
+  font-weight: 600;
+}
+
+.breadcrumbItem {
+  font-weight: 300;
+  size: auto;
+  width: auto;
+}
+
+.separator {
+  font-size: large;
+  font-weight: 600;
 }

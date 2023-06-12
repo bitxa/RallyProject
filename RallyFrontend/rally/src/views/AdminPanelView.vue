@@ -4,9 +4,6 @@
 
 <template>
     <v-container fluid class="admin-panel">
-        <button type="button" class="menu-toggle-button" @click="toggleMenu">
-            <ChMenuHamburger class="menu-icon" :class="{ 'menu-icon-active': !showMenu }" />
-        </button>
 
         <aside :class="{ 'hide-menu': !showMenu }" @mouseleave="hideMenuButton" @mouseover="showMenuButton">
             <img src="../assets/img/rally_logo.png" class="rally_logo">
@@ -51,6 +48,27 @@
                     </span>
                 </button>
 
+
+                <button type="button" class="menu_button" @click="selectMenuItem('categories')"
+                    :class="{ active: currentComponent === 'CategoriesComponent' }">
+                    <span>
+                        <CaCategoryNewEach class="menu_icon" />
+                    </span>
+                    <span>
+                        <p> Categorias </p>
+                    </span>
+                </button>
+
+                <button type="button" class="menu_button" @click="selectMenuItem('teams')"
+                    :class="{ active: currentComponent === 'TeamsComponent' }">
+                    <span>
+                        <FlFilledPeopleTeam class="menu_icon" />
+                    </span>
+                    <span>
+                        <p> Equipos </p>
+                    </span>
+                </button>
+
                 <button type="button" class="menu_button" @click="selectMenuItem('competitors')"
                     :class="{ active: currentComponent === 'CompetitorsComponent' }">
                     <span>
@@ -70,33 +88,15 @@
                         <p> Sponsors </p>
                     </span>
                 </button>
-
-                <button type="button" class="menu_button" @click="selectMenuItem('teams')"
-                    :class="{ active: currentComponent === 'TeamsComponent' }">
-                    <span>
-                        <FlFilledPeopleTeam class="menu_icon" />
-                    </span>
-                    <span>
-                        <p> Equipos </p>
-                    </span>
-                </button>
-
-                <button type="button" class="menu_button" @click="selectMenuItem('categories')"
-                    :class="{ active: currentComponent === 'CategoriesComponent' }">
-                    <span>
-                        <FlFilledPeopleTeam class="menu_icon" />
-                    </span>
-                    <span>
-                        <p> Categorias </p>
-                    </span>
-                </button>
-
             </div>
             <v-switch v-model="lightMode" label="Dark Mode" inset @change="toggleDarkMode"></v-switch>
 
         </aside>
 
         <main :class="{ 'full-width': !showMenu }">
+            <button class="menu-toggle-button" @click="toggleMenu">
+                <ChMenuHamburger class="menu-icon" :class="{ 'menu-icon-active': !showMenu }" />
+            </button>
             <keep-alive>
                 <component :is="currentComponent" :key="currentComponent"></component>
             </keep-alive>
@@ -105,6 +105,7 @@
 </template>
 
 <script lang="ts">
+// ICONS
 import { JaFillChronometer } from "@kalimahapps/vue-icons";
 import { UnPathfinderUnite } from "@kalimahapps/vue-icons";
 import { FlFilledPeopleTeam } from "@kalimahapps/vue-icons";
@@ -112,18 +113,21 @@ import { AnOutlinedUsergroupAdd } from "@kalimahapps/vue-icons";
 import { CaLocationCompanyFilled } from "@kalimahapps/vue-icons";
 import { FaRoad } from "@kalimahapps/vue-icons";
 import { ChMenuHamburger } from "@kalimahapps/vue-icons";
+import { CaCategoryNewEach } from "@kalimahapps/vue-icons";
 
+// COMPONENTS
 import CompetitionComponent from "@/components/menu_entities/CompetitionComponent.vue";
 import TimesComponent from "@/components/menu_entities/TimesComponent.vue";
 import CircuitsComponent from "@/components/menu_entities/CircuitsComponent.vue";
 import CompetitorsComponent from "@/components/menu_entities/CompetitorsComponent.vue";
 import SponsorsComponent from "@/components/menu_entities/SponsorsComponent.vue";
 import TeamsComponent from "@/components/menu_entities/TeamsComponent.vue";
-import CategoriesComponent from "@/components/menu_entities/TeamsComponent.vue";
+import CategoriesComponent from "@/components/menu_entities/CategoriesComponent.vue";
 
+//Vuex Storage
 
 export default {
-    name: 'LoginView',
+    name: 'AdminPanelView',
     components: {
         JaFillChronometer,
         UnPathfinderUnite,
@@ -132,6 +136,7 @@ export default {
         CaLocationCompanyFilled,
         AnOutlinedUsergroupAdd,
         ChMenuHamburger,
+        CaCategoryNewEach,
         CompetitionComponent,
         TimesComponent,
         CircuitsComponent,
@@ -164,7 +169,7 @@ export default {
                     this.currentComponent = 'CompetitorsComponent';
                     break;
                 case 'categories':
-                    this.currentComponent = 'CompetitorsComponent';
+                    this.currentComponent = 'CategoriesComponent';
                     break;
                 case 'sponsors':
                     this.currentComponent = 'SponsorsComponent';

@@ -2,16 +2,23 @@
 
 
 <template>
-    <AdminMenuItemHeader header_title="Sponsors" :listing_data="[]" :placeholder="'Busque algún sponsor:'" />
+    <v-breadcrumbs class="breadcrumb">
+        <div class="item">
+            <label class="breadcrumbLabel">Competencia:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
 
-    <v-col cols="auto" class="new-box-container">
-        <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Añadir sponsor</h2>
-            <v-icon left>
-                <AnFilledPlusCircle class="plus" />
-            </v-icon>
-        </v-btn>
-    </v-col>
+        <div class="item">
+            <label class="breadcrumbLabel">Categoria:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
+    </v-breadcrumbs>
+
+    <AdminMenuItemHeader header_title="Sponsors" :data="[]" :placeholder="'Busque algún sponsor:'" />
+    <NewEntityButton :button_title="'Añadir Sponsor'" @showForm="showForm"></NewEntityButton>
+
 
     <div class="container">
         <div v-if="isFormVisible" class="overlay">
@@ -52,14 +59,20 @@
 <script lang="ts">
 
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
-import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 
 import NewSponsor from "@/components/menu_entities/floating-forms/NewSponsor.vue";
+import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
+
 import ImagePicker from "@/components/menu_entities/floating-forms/fragments/ImagePicker.vue";
 
 export default {
     name: 'SponsorsComponent',
-    components: { AdminMenuItemHeader, AnFilledPlusCircle, NewSponsor, ImagePicker },
+    components: {
+        AdminMenuItemHeader,
+        NewEntityButton,
+        NewSponsor,
+        ImagePicker
+    },
 
     data() {
         return {

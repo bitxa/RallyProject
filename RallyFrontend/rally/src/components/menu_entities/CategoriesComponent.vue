@@ -1,16 +1,23 @@
 <style src="@/assets/styles/admin_panel/entity_data.css"></style>
 
 <template>
-    <AdminMenuItemHeader header_title="Circuitos" :listing_data="[]" :placeholder="'Busque algún circuito:'" />
+    <v-breadcrumbs class="breadcrumb">
+        <div class="item">
+            <label class="breadcrumbLabel">Competencia:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
 
-    <v-col cols="auto" class="new-box-container">
-        <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Crear circuito</h2>
-            <v-icon left>
-                <AnFilledPlusCircle class="plus" />
-            </v-icon>
-        </v-btn>
-    </v-col>
+        <div class="item">
+            <label class="breadcrumbLabel">Circuito:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
+    </v-breadcrumbs>
+
+    <AdminMenuItemHeader header_title="Categorias" :data="[]" :placeholder="'Busque alguna categoria:'" />
+
+    <NewEntityButton :button_title="'Crear categoria'" @showForm="showForm"></NewEntityButton>
 
 
     <div class="container">
@@ -62,8 +69,9 @@
 </template>
 
 <script lang="ts">
-import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
+import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
+
 import NewCircuit from "@/components/menu_entities/floating-forms/NewCircuit.vue";
 import LinkWithAnimation from "@/components/menu_entities/fragments/LinkWithAnimation.vue";
 
@@ -71,10 +79,10 @@ import LinkWithAnimation from "@/components/menu_entities/fragments/LinkWithAnim
 export default {
     name: 'CategoriesComponent',
     components: {
-        AnFilledPlusCircle,
         AdminMenuItemHeader,
         NewCircuit,
-        LinkWithAnimation
+        LinkWithAnimation,
+        NewEntityButton
     },
 
     data() {

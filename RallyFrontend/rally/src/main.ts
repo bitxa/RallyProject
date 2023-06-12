@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import { createPinia } from "pinia";
+import { competitionStore } from "./stores/competitionStore";
 import router from "./router";
-import { provideSocketIO } from "./services/WebSocketPlugin";
 
 // Vuetify
 import "vuetify/styles";
@@ -17,9 +18,11 @@ const vuetify = createVuetify({
   directives,
 });
 
+const pinia = createPinia();
 const app = createApp(App);
-/*
-const webSocketServerUrl = "ws://localhost:3001";
-provideSocketIO(webSocketServerUrl);*/
 
-app.use(router).use(vuetify).mount("#app");
+app.use(router);
+app.use(vuetify);
+app.use(pinia);
+
+app.mount("#app");

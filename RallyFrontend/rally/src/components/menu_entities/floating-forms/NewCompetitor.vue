@@ -41,7 +41,10 @@
             </div>
         </form>
 
-        <Actions @submit="submitForm" @cancel="cancelForm" />
+        <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
+        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
+            :dialog="'¿Seguro que deseas agrear un nuevo competidor ?'" @cancel="closeConfirmation" />
+
     </div>
 </template>
 
@@ -49,6 +52,7 @@
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
+import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 
 import { ref, onMounted } from 'vue';
@@ -57,11 +61,12 @@ import { apiService } from '@/services/apiService';
 
 export default {
 
-    components: { VueDatePicker, Actions },
+    components: { VueDatePicker, Actions, ConfirmationDialog },
     name: 'NewCompetitor',
 
     data() {
         return {
+            showConfirmationDialog: false,
             name: '',
             age: '',
             identification: '',
@@ -92,7 +97,16 @@ export default {
         },
         cancelForm() {
             this.$emit('close');
-        }
+        },
+
+        showConfirmation() {
+            this.showConfirmationDialog = true;
+        },
+
+        closeConfirmation() {
+            this.showConfirmationDialog = false;
+        },
+
 
     }
 }

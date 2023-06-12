@@ -50,5 +50,5 @@ form .field input {
   border: 1px solid var(--input_bordercolor_dark);
   padding: 10px;
   outline: none;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }

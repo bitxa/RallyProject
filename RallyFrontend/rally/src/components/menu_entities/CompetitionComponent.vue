@@ -1,32 +1,30 @@
 <style src="@/assets/styles/admin_panel/entity_data.css"></style>
 
 <template>
-  <AdminMenuItemHeader header_title="Competiciones" :listing_data="competitionNames"
-    :placeholder="'Busque alguna competencia:'" />
+  <AdminMenuItemHeader header_title="Competiciones" :data="competitions" :placeholder="'Busque alguna competencia:'"
+    @selected-name="handleSelectedName" />
 
-  <v-col cols="auto" class="new-box-container">
-    <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-      <h2>Crear competencia</h2>
-      <v-icon left>
-        <AnFilledPlusCircle class="plus" />
-      </v-icon>
-    </v-btn>
-  </v-col>
-
+  <NewEntityButton :button_title="'Crear competencia'" @showForm="showForm"></NewEntityButton>
 
   <div class="container">
 
     <div v-if="isFormVisible" class="overlay">
-      <NewCompetence @close="hideForm" />
+      <NewCompetition @close="hideForm" @competition_created="competitionCreated" />
     </div>
 
-    <div class="box" v-for="(competition, index) in competitions" :key="index">
+    <div class="box" v-for="(competition, index) in filteredCompetitions" :key="index">
       <span>
         <h2>{{ competition.name }}</h2>
 
-        <v-btn rounded class="edit-button" fab color="primary">
-          <FaPencil />
-        </v-btn>
+        <div class="action_buttons">
+          <v-btn rounded class="edit-button" fab color="primary" @click="">
+            <FaPencil />
+          </v-btn>
+
+          <v-btn rounded class="delete-button" @click="deleteCompetition(index)">
+            <AkCircleXFill />
+          </v-btn>
+        </div>
       </span>
 
       <div class="info-element">
@@ -68,33 +66,35 @@
 </template>
 
 <script lang="ts">
-import { apiService } from '@/services/apiService';
-import { onMounted, ref } from 'vue';
+import { competitionStore } from '@/stores/competitionStore';
+import { onMounted, ref, watch } from 'vue';
 import { type Competition } from '@/components/menu_entities/interfaces/Interfaces';
-
-import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
 import { FaPencil } from "@kalimahapps/vue-icons";
+import { AkCircleXFill } from "@kalimahapps/vue-icons";
 
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
+import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
+
 import LinkWithAnimation from "@/components/menu_entities/fragments/LinkWithAnimation.vue";
-import NewCompetence from "@/components/menu_entities/floating-forms/NewCompetence.vue"
+import NewCompetition from "@/components/menu_entities/floating-forms/NewCompetition.vue"
 
 export default {
   name: 'CompetitionComponent',
   components: {
-    AnFilledPlusCircle,
     FaPencil,
+    AkCircleXFill,
     LinkWithAnimation,
     AdminMenuItemHeader,
-    NewCompetence
+    NewEntityButton,
+    NewCompetition,
   },
 
   data() {
     return {
       isFormVisible: false,
-      competitionMenu: false as boolean,
+      competitionMenu: false,
       selectedCompetition: ref<Competition | null>(null),
-      search: '',
+      selectedCompetitionName: null as String | null,
     };
   },
 
@@ -102,39 +102,54 @@ export default {
     showForm() {
       this.isFormVisible = true;
     },
+
     hideForm() {
       this.isFormVisible = false;
     },
-    selectCompetition(competition: any) {
-      this.selectedCompetition = competition;
-      this.competitionMenu = false;
+
+    handleSelectedName(name: string): void {
+      this.selectedCompetitionName = name;
     },
 
+    competitionCreated(newCompetition: Competition) {
+      this.competitions.push(newCompetition);
+    },
 
+    async deleteCompetition(index: any) {
+      await competitionStore().deleteCompetition(index);
+    },
+
+  },
+
+  computed: {
+    filteredCompetitions(): Competition[] {
+      if (this.selectedCompetitionName === undefined) {
+        return this.competitions;
+      }
+
+      return this.competitions.filter((competition) =>
+        competition.name.toLowerCase().includes(this.selectedCompetitionName?.toLowerCase() ?? '')
+      );
+    },
+
+    competitions() {
+      return competitionStore().competitions;
+    },
   },
 
 
   setup() {
-    var competitions = ref<Competition[]>([]);
+    var competitions = ref<Competition[]>([])
 
     onMounted(async () => {
-      try {
-        const response = await apiService.getData('competitions');
-        competitions.value = response.data;
+      await competitionStore().fetchCompetitions();
+      competitions.value = competitionStore().competitions;
+    });
 
-      } catch (error) {
-        console.error(error);
-      }
 
-    })
-
-    return { competitions };
-  },
-
-  computed: {
-    competitionNames() {
-      return this.competitions.map((competition) => competition.name);
-    },
+    return {
+      competitions,
+    };
   },
 }
 </script>

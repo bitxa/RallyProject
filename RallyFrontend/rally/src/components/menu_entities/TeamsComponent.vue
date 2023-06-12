@@ -2,16 +2,30 @@
 
 
 <template>
-    <AdminMenuItemHeader header_title="Equipos" :listing_data="[]" :placeholder="'Busque algún equipo:'" />
+    <v-breadcrumbs class="breadcrumb">
+        <div class="item">
+            <label class="breadcrumbLabel">Competencia:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
 
-    <v-col cols="auto" class="new-box-container">
-        <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Crear equipo</h2>
-            <v-icon left>
-                <AnFilledPlusCircle class="plus" />
-            </v-icon>
-        </v-btn>
-    </v-col>
+        <div class="item">
+            <label class="breadcrumbLabel">Circuito:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
+
+        <div class="item">
+            <label class="breadcrumbLabel">Categoria:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
+    </v-breadcrumbs>
+
+    <AdminMenuItemHeader header_title="Equipos" :data="[]" :placeholder="'Busque algún equipo:'" />
+
+    <NewEntityButton :button_title="'Crear equipo'" @showForm="showForm"></NewEntityButton>
+
 
     <div class="container">
         <div v-if="isFormVisible" class="overlay">
@@ -59,14 +73,12 @@
 </template>
 
 <script lang="ts">
-
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
-import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
-
+import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
 
 export default {
     name: 'TeamsComponent',
-    components: { AnFilledPlusCircle, AdminMenuItemHeader },
+    components: { AdminMenuItemHeader, NewEntityButton },
 
     data() {
         return {

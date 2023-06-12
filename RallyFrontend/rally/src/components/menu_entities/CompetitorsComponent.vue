@@ -1,16 +1,30 @@
 <style src="@/assets/styles/admin_panel/entity_data.css"></style>
 
 <template>
-    <AdminMenuItemHeader header_title="Competidores" :listing_data="[]" :placeholder="'Busque algún competidor:'" />
+    <v-breadcrumbs class="breadcrumb">
+        <div class="item">
+            <label class="breadcrumbLabel">Competencia:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
 
-    <v-col cols="auto" class="new-box-container">
-        <v-btn size="x-large" class="new-box" @click="showForm" rounded>
-            <h2>Añadir competidor</h2>
-            <v-icon left>
-                <AnFilledPlusCircle class="plus" />
-            </v-icon>
-        </v-btn>
-    </v-col>
+        <div class="item">
+            <label class="breadcrumbLabel">Circuito:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
+
+        <div class="item">
+            <label class="breadcrumbLabel">Categoria:</label>
+            <input role="textbox" class="breadcrumbItem" />
+            <p class="separator">|</p>
+        </div>
+    </v-breadcrumbs>
+
+    <AdminMenuItemHeader header_title="Competidores" :data="[]" :placeholder="'Busque algún competidor:'" />
+
+    <NewEntityButton :button_title="'Crear competidor'" @showForm="showForm"></NewEntityButton>
+
 
     <div class="container">
         <div v-if="isFormVisible" class="overlay">
@@ -64,15 +78,19 @@
 
 <script lang="ts">
 
-import { AnFilledPlusCircle } from "@kalimahapps/vue-icons";
-
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
+import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
+
 import NewCompetitor from "@/components/menu_entities/floating-forms/NewCompetitor.vue"
 
 
 export default {
     name: 'CompetitorsComponent',
-    components: { AdminMenuItemHeader, AnFilledPlusCircle, NewCompetitor },
+    components: {
+        AdminMenuItemHeader,
+        NewEntityButton,
+        NewCompetitor
+    },
     data() {
         return {
             isFormVisible: false,

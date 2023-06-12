@@ -28,7 +28,8 @@
         </form>
 
         <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
-        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false" />
+        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
+            :dialog="'¿Seguro que deseas agrear una nueva competición ?'" @cancel="closeConfirmation" />
 
     </div>
 </template>
@@ -36,13 +37,12 @@
 <script lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { competitionStore } from '@/stores/competitionStore';
 
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 
 import { ref, onMounted } from 'vue';
-import { apiService } from '@/services/apiService';
-
 
 const date = ref();
 
@@ -54,15 +54,16 @@ onMounted(() => {
 
 export default {
 
+    name: 'NewCompetition',
     components: { VueDatePicker, Actions, ConfirmationDialog },
-    name: 'NewCompetence',
+
     data() {
         return {
+            showConfirmationDialog: false,
             name: '',
             province: '',
             description: '',
             date: date,
-            showConfirmationDialog: false,
         };
     },
     methods: {
@@ -74,17 +75,12 @@ export default {
                 end_date: new Date(this.date[1]).toISOString(),
                 province: this.province,
             }
-
-            console.log('Form submitted:');
-            console.log(data);
-
-            await apiService.postData(data, 'competitions')
+            await competitionStore().addCompetition(data);
 
             this.$emit('close');
         },
 
         cancelForm() {
-            console.log('Form cancelled:');
             this.$emit('close');
         },
 

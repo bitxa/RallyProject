@@ -11,6 +11,10 @@ class ApiService {
   async getData(endpoint: String) {
     return axios.get(`${this.API_URL}/${endpoint}`);
   }
+
+  async deleteData(endpoint: any, id: any) {
+    return axios.delete(`${this.API_URL}/${endpoint}/${id}`);
+  }
 }
 
 const apiService = new ApiService();

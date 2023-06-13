@@ -7,12 +7,7 @@ import { config } from 'dotenv';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  //* Load environment variables from .env file
   config();
-
-  /*
-   * 'config' const name refactored to 'docConfig', so that there is conflict with config() method from dotenv.
-   */
 
   const docConfig = new DocumentBuilder()
     .setTitle('API documentation')
@@ -31,11 +26,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   app.enableCors({
-    origin: 'http://localhost:5173', // specify the allowed origin
-    methods: ['GET', 'POST'], // specify allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // specify allowed headers
-    exposedHeaders: ['Content-Length'], // specify headers exposed to the client
-    credentials: true, // enable sending cookies across domains
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length'],
+    credentials: true,
   });
 
   await app.listen(3000);

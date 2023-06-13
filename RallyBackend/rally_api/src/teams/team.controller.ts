@@ -8,18 +8,18 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { CompetitionsService } from './competitions.service';
-import { CreateCompetitionDto } from './dto/create-competition.dto';
-import { UpdateCompetitionDto } from './dto/update-competition.dto';
+import { TeamsService } from './team.service';
+import { CreateTeamDto } from './dto/create-team.dto';
+import { UpdateTeamDto } from './dto/update-team.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('competitions')
 @Controller('competitions')
-export class CompetitionsController {
-  constructor(private readonly competitionsService: CompetitionsService) {}
+export class TeamController {
+  constructor(private readonly competitionsService: TeamsService) {}
 
   @Post()
-  create(@Body() createCompetitionDto: CreateCompetitionDto) {
+  create(@Body() createCompetitionDto: CreateTeamDto) {
     return this.competitionsService.create(createCompetitionDto);
   }
 
@@ -34,16 +34,12 @@ export class CompetitionsController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateCompetitionDto: UpdateCompetitionDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateCompetitionDto: UpdateTeamDto) {
     return this.competitionsService.update(id, updateCompetitionDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    console.log(id);
     return this.competitionsService.remove(id);
   }
 }

@@ -10,12 +10,12 @@ import { CircuitsModule } from './circuits/circuits.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CompetitionsModule } from './competitions/competitions.module';
 import { SponsorsModule } from './sponsors/sponsors.module';
-import { DriversModule } from './drivers/drivers.module';
+import { CompetitorsModule } from './competitors/competitors.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    //! esto mandar a .env
+
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -31,7 +31,7 @@ import { DriversModule } from './drivers/drivers.module';
     CategoriesModule,
     CompetitionsModule,
     SponsorsModule,
-    DriversModule,
+    CompetitorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

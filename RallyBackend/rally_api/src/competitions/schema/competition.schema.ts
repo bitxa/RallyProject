@@ -1,7 +1,6 @@
-import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Circuit } from 'src/circuits/schema/circuit.schema';
+//import { Circuit } from 'src/circuits/schema/circuit.schema';
 
 //TODO el schema de los Circuitos
 export type CompetitionsDocument = HydratedDocument<Competition>;
@@ -23,9 +22,11 @@ export class Competition {
   @Prop()
   province: string;
 
+  /*
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Circuit' }],
   })
   circuits: Circuit[];
+  */
 }
 export const CompetitionsSchema = SchemaFactory.createForClass(Competition);

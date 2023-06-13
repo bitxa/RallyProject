@@ -1,27 +1,37 @@
-import { Type } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
-import { Driver } from 'src/drivers/schema/driver.schema';
+//import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsEmpty,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  //ValidateNested,
+} from 'class-validator';
+//import { Team } from 'src/teams/schema/team.schema';
 
 export class CreateCategoryDto {
   @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  readonly circuit_id: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly circuit: string;
+  readonly name: string;
 
-  @IsNotEmpty()
+  @IsEmpty()
+  @IsOptional()
   @IsString()
   readonly description: string;
 
   @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Driver)
-  readonly winning_drivers: Driver[];
-
+  @IsEmpty()
+  @IsOptional()
+  @IsString({ each: true })
+  readonly participantTeamsIds: string[];
+  /*
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Driver)
-  readonly drivers: Driver[];
+  @Type(() => Team)
+  readonly teams: Team[];
+  */
 }

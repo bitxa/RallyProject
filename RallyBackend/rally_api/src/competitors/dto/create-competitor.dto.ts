@@ -1,30 +1,40 @@
-import { Type } from 'class-transformer';
+//import { Type } from 'class-transformer';
 import {
+  IsEmpty,
   IsNotEmpty,
-  IsNumber,
+  //IsNumber,
+  IsOptional,
   IsString,
-  ValidateNested,
+  //ValidateNested,
 } from 'class-validator';
-import { Category } from 'src/categories/schema/category.schema';
+//import { Category } from 'src/categories/schema/category.schema';
 
-export class CreateDriverDto {
+export class CreateCompetitorDto {
+  @IsNotEmpty()
+  @IsString()
+  readonly team_id: string;
+
   @IsNotEmpty()
   @IsString()
   readonly name: string;
 
-  @IsNotEmpty()
-  @IsNumber()
+  @IsEmpty()
+  @IsOptional()
+  @IsString()
   readonly age: number;
 
-  @IsNotEmpty()
+  @IsEmpty()
+  @IsOptional()
   @IsString()
   readonly identification: string;
 
-  @IsNotEmpty()
+  @IsEmpty()
+  @IsOptional()
   @IsString()
   readonly blood_type: string;
 
-  @IsNotEmpty()
+  @IsEmpty()
+  @IsOptional()
   @IsString()
   readonly emergency_contact: string;
 
@@ -37,7 +47,12 @@ export class CreateDriverDto {
   readonly city: string;
 
   @IsNotEmpty()
+  @IsString()
+  readonly role: string;
+  /*
+  @IsNotEmpty()
   @ValidateNested()
   @Type(() => Category)
   readonly current_category: Category;
+  */
 }

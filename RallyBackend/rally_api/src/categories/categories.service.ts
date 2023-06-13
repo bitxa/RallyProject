@@ -16,11 +16,11 @@ export class CategoriesService {
   }
 
   async findAll(): Promise<Category[]> {
-    return await this.categoriesModule.find().populate('drivers');
+    return await this.categoriesModule.find().populate('teams');
   }
 
   async findOne(id: string): Promise<Category> {
-    return await this.categoriesModule.findById(id).populate('drivers');
+    return await this.categoriesModule.findById(id).populate('teams');
   }
 
   async update(
@@ -29,12 +29,10 @@ export class CategoriesService {
   ): Promise<Category> {
     return await this.categoriesModule
       .findByIdAndUpdate(id, updateCategoryDto)
-      .populate('drivers');
+      .populate('teams');
   }
 
   async remove(id: string): Promise<Category> {
-    return await this.categoriesModule
-      .findByIdAndDelete(id)
-      .populate('drivers');
+    return await this.categoriesModule.findByIdAndDelete(id).populate('teams');
   }
 }

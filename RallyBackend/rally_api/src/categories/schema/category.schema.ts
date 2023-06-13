@@ -1,10 +1,11 @@
-import * as mongoose from 'mongoose';
+//import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-import { Driver } from 'src/drivers/schema/driver.schema';
+//import { Team } from 'src/teams/schema/team.schema';
 
-//TODO el schema de los Circuitos
+// TODO: Define the Circuit schema
+
 export type CategoriesDocument = HydratedDocument<Category>;
 
 @Schema()
@@ -13,22 +14,16 @@ export class Category {
   name: string;
 
   @Prop()
-  circuits: string;
+  circuit_id: string;
 
   @Prop()
   description: string;
 
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Driver' }],
-  })
-  winning_drivers: Driver[];
-
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Driver' }],
-  })
-  drivers: Driver[];
+  @Prop()
+  winning_team: string;
 
   @Prop()
-  password: string;
+  participantTeamsIds: string[];
 }
+
 export const CategorySchema = SchemaFactory.createForClass(Category);

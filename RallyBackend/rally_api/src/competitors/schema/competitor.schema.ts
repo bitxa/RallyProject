@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Category } from 'src/categories/schema/category.schema';
+//import { Category } from 'src/categories/schema/category.schema';
 
-export type DriverDocument = HydratedDocument<Driver>;
+export type CompetitorDocument = HydratedDocument<Competitor>;
 
 @Schema()
-export class Driver {
+export class Competitor {
   @Prop()
   name: string;
 
@@ -27,8 +27,10 @@ export class Driver {
   @Prop()
   city: string;
 
+  /*
   @Prop()
   current_category: Category;
+  */
 }
 
-export const DriversSchema = SchemaFactory.createForClass(Driver);
+export const CompetitorsSchema = SchemaFactory.createForClass(Competitor);

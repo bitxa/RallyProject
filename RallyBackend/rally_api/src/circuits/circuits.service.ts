@@ -24,10 +24,7 @@ export class CircuitsService {
   }
 
   async findOne(id: string): Promise<Circuit> {
-    const circuit = await this.circuitsModule
-      .findById(id)
-      .populate('sponsor')
-      .populate('category');
+    const circuit = await this.circuitsModule.findById(id); //.populate('sponsor')//.populate('category');
     return circuit;
   }
 
@@ -35,18 +32,17 @@ export class CircuitsService {
     id: string,
     updateCircuitDto: UpdateCircuitDto,
   ): Promise<Circuit> {
-    const updatedCircuit = await this.circuitsModule
-      .findByIdAndUpdate(id, updateCircuitDto)
-      .populate('sponsor')
-      .populate('category');
+    const updatedCircuit = await this.circuitsModule.findByIdAndUpdate(
+      id,
+      updateCircuitDto,
+    ); //.populate('sponsor').//populate('category');
     return updatedCircuit;
   }
 
   async remove(id: string): Promise<Circuit> {
-    const deletedCircuit = await this.circuitsModule
-      .findByIdAndDelete(id)
-      .populate('sponsor')
-      .populate('category');
+    const deletedCircuit = await this.circuitsModule.findByIdAndDelete(id);
+    //.populate('sponsor')
+    //.populate('category');
     return deletedCircuit;
   }
 }

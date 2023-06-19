@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--input_backgroundcolor_dark);
+  color: var(--fontcolor_dark);
   width: 50%;
   min-height: 50vh;
   height: auto;
@@ -9,10 +10,24 @@
   padding-top: 1.2vh;
   border-radius: 12px;
   text-align: center;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  overflow: auto;
 }
 
-.popup h2 {
-  padding: 2vh;
+.popup .header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 3vh;
+}
+
+.popup .header_icon{
+  margin: 2vh;
+  font-size: xx-large;
 }
 
 form {
@@ -41,7 +56,8 @@ form .field label {
   text-transform: uppercase;
 }
 
-form .field input {
+form .field input, select {
+  background-color: var(--backgroundcolor_dark);
   font-size: small;
   width: 100%;
   margin-left: 1px;
@@ -50,5 +66,9 @@ form .field input {
   border: 1px solid var(--input_bordercolor_dark);
   padding: 10px;
   outline: none;
-  text-transform: capitalize;
+}
+
+form .field input::placeholder{
+  color: var(--secondary_fontcolor_dark);
+  opacity: 50%;
 }

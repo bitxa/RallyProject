@@ -61,7 +61,7 @@
 }
 
 .info-element {
-  background-color: var(--backgroundcolor_dark);
+  background-color: var(--input_backgroundcolor_dark);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -105,33 +105,6 @@
   margin: 2vh;
 }
 
-.edit-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: large;
-  width: auto;
-  margin: 1vh;
-  margin-right: 0;
-}
-.delete-button {
-  color: aliceblue;
-  margin: 0;
-  padding: 0%;
-  padding-bottom: 5vh;
-  font-size: 5vh;
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-}
-.action_buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
 .overlay {
   position: fixed;
   display: flex;
@@ -146,36 +119,44 @@
   padding: 5vh;
   overflow-x: scroll;
 }
-
 .breadcrumb {
-  color: var(--fontcolor_dark);
-  padding: 0%;
-  margin: 0%;
-  font-size: 2.5vh;
-  background-color: var(--secondary_background_color_dark);
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.breadcrumb .item {
-  width: auto;
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-}
-.breadcrumbLabel {
-  margin: 1vh;
-  font-weight: 600;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 8px;
 }
 
-.breadcrumbItem {
-  font-weight: 300;
-  size: auto;
-  width: auto;
+.breadcrumb .item {
+  flex: 1;
+  width: 100%;
+  padding: 1vh;
+  display: flex;
+  background-color: #f5f5f5;
+  align-items: center;
+  margin-right: 1vh;
+  position: relative;
+  border-radius: 1vh;
+  -webkit-border-radius: 1vh;
+  -moz-border-radius: 1vh;
+  -ms-border-radius: 1vh;
+  -o-border-radius: 1vh;
 }
 
-.separator {
-  font-size: large;
-  font-weight: 600;
+.breadcrumb .breadcrumbLabel {
+  margin-right: 1vh;
+  font-weight: bold;
+}
+
+.breadcrumbInput {
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  padding: 1vh 2vh;
+  width: 100%;
+}
+
+.breadcrumbInput:focus {
+  outline: none;
 }

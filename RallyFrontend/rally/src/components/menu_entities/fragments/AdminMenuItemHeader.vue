@@ -1,16 +1,17 @@
 <template>
     <div class="header">
         <h2>{{ header_title }}</h2>
-        <input type="text" v-model="selectedItemName" list="item-list" class="custom-select" @input="handleSelection"
+        <input type="text" v-model="selectedItemName" :list="listID" class="custom-select" @input="handleSelection"
             @change="handleSelection" :placeholder="placeholder">
-        <option v-for="item in filteredData" :key="item._id" :value="item.name">{{ item.name }}</option>
-        <datalist id="item-list">
+        <datalist :id="listID">
+            <option v-for="item in filteredData" :key="item._id">{{ item.name }}</option>
         </datalist>
     </div>
 </template>
 
 <script lang="ts">
-import { ref, type PropType, watch } from 'vue';
+import { ref, computed, type PropType, watch } from 'vue';
+import {createUUID } from '@/helpers/uniqueIdGenerator.js';
 
 export default {
     name: 'AdminMenuItemHeader',
@@ -30,7 +31,7 @@ export default {
         },
     },
 
-    emits: ['selected-name'],
+    emits: ['input_name'],
 
     setup(props, { emit }) {
         const selectedItemName = ref<string | null>(null);
@@ -38,11 +39,11 @@ export default {
         const handleSelection = () => {
 
             if (selectedItemName.value === null || selectedItemName.value === '' || selectedItemName.value === ' ') {
-                emit('selected-name', undefined);
+                emit('input_name', undefined);
                 return;
             }
 
-            emit('selected-name', selectedItemName.value);
+            emit('input_name', selectedItemName.value);
 
         };
 
@@ -61,10 +62,13 @@ export default {
             }
         );
 
+        const listID = computed(() => createUUID());
+        
         return {
             selectedItemName,
             handleSelection,
             filteredData,
+            listID,
         };
     },
 };

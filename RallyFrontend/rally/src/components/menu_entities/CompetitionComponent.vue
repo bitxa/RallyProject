@@ -2,44 +2,33 @@
 
 <template>
   <AdminMenuItemHeader header_title="Competiciones" :data="competitions" :placeholder="'Busque alguna competencia:'"
-    @selected-name="handleSelectedName" />
+    @input_name="handleInput" />
 
-  <NewEntityButton :button_title="'Crear competencia'" @showForm="showForm"></NewEntityButton>
+  <NewEntityButton :button_title="'Crear competencia'" @showForm="showForm" />
 
   <div class="container">
-
     <div v-if="isFormVisible" class="overlay">
-      <NewCompetition @close="hideForm" @competition_created="competitionCreated" />
+      <NewCompetition @close="hideForm"/>
     </div>
 
     <div class="box" v-for="(competition, index) in filteredCompetitions" :key="index">
       <span>
         <h2>{{ competition.name }}</h2>
-
-        <div class="action_buttons">
-          <v-btn rounded class="edit-button" fab color="primary" @click="">
-            <FaPencil />
-          </v-btn>
-
-          <v-btn rounded class="delete-button" @click="deleteCompetition(index)">
-            <AkCircleXFill />
-          </v-btn>
-        </div>
+        <ActionsForEntity @deleteItem="deleteCompetition(index)"/>
       </span>
 
       <div class="info-element">
         <div class="dates">
           <div class="date">
             <h2>Fecha Inicio</h2>
-            <p>{{ competition.start_date }}</p>
+            <p>{{ formatDate(competition.start_date) }}</p>
           </div>
 
           <div class="date">
             <h2>Fecha Fin</h2>
-            <p>{{ competition.end_date }}</p>
+            <p>{{ formatDate(competition.start_date) }}</p>
           </div>
         </div>
-
       </div>
 
       <div class="info-element">
@@ -49,34 +38,27 @@
 
       <div class="info-element">
         <h2>Descripción</h2>
-        <p>{{ competition.description }}
-        </p>
+        <p>{{ competition.description }}</p>
       </div>
-
 
       <div class="info-element">
         <h2>Circuitos</h2>
         <LinkWithAnimation :message="'Ver Circuitos'" />
       </div>
     </div>
-
-
-
   </div>
 </template>
 
 <script lang="ts">
-import { competitionStore } from '@/stores/competitionStore';
-import { onMounted, ref, watch } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { type Competition } from '@/components/menu_entities/interfaces/Interfaces';
-import { FaPencil } from "@kalimahapps/vue-icons";
-import { AkCircleXFill } from "@kalimahapps/vue-icons";
-
+import { FaPencil, AkCircleXFill } from '@kalimahapps/vue-icons';
+import { competitionStore } from '@/stores/competitionStore';
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
 import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
-
-import LinkWithAnimation from "@/components/menu_entities/fragments/LinkWithAnimation.vue";
-import NewCompetition from "@/components/menu_entities/floating-forms/NewCompetition.vue"
+import LinkWithAnimation from '@/components/menu_entities/fragments/LinkWithAnimation.vue';
+import ActionsForEntity from '@/components/menu_entities/fragments/ActionsForEntity.vue';
+import NewCompetition from '@/components/menu_entities/floating-forms/NewCompetition.vue';
 
 export default {
   name: 'CompetitionComponent',
@@ -84,74 +66,64 @@ export default {
     FaPencil,
     AkCircleXFill,
     LinkWithAnimation,
+    ActionsForEntity,
     AdminMenuItemHeader,
     NewEntityButton,
     NewCompetition,
   },
 
-  data() {
-    return {
-      isFormVisible: false,
-      competitionMenu: false,
-      selectedCompetition: ref<Competition | null>(null),
-      selectedCompetitionName: null as String | null,
+  setup() {
+    const isFormVisible = ref(false);
+    const competitions = ref<Competition[]>([]);
+    const selectedCompetitionName = ref<string | null>(null);
+
+    const showForm = () => {
+      isFormVisible.value = true;
     };
-  },
 
-  methods: {
-    showForm() {
-      this.isFormVisible = true;
-    },
+    const hideForm = () => {
+      isFormVisible.value = false;
+    };
 
-    hideForm() {
-      this.isFormVisible = false;
-    },
+    const handleInput = (name: string) => {
+      selectedCompetitionName.value = name;
+    };
 
-    handleSelectedName(name: string): void {
-      this.selectedCompetitionName = name;
-    },
+    const formatDate= (date: any) =>{
+      if (!date) return "";
+      return date.split("T")[0];
+    };
 
-    competitionCreated(newCompetition: Competition) {
-      this.competitions.push(newCompetition);
-    },
-
-    async deleteCompetition(index: any) {
+    const deleteCompetition = async (index: number) => {
       await competitionStore().deleteCompetition(index);
-    },
+    };
 
-  },
-
-  computed: {
-    filteredCompetitions(): Competition[] {
-      if (this.selectedCompetitionName === undefined) {
-        return this.competitions;
+    const filteredCompetitions = computed(() => {
+      if (!selectedCompetitionName.value) {
+        return competitions.value;
       }
 
-      return this.competitions.filter((competition) =>
-        competition.name.toLowerCase().includes(this.selectedCompetitionName?.toLowerCase() ?? '')
+      return competitions.value.filter((competition) =>
+        competition.name.toLowerCase().includes(selectedCompetitionName.value?.toLowerCase() ?? '')
       );
-    },
-
-    competitions() {
-      return competitionStore().competitions;
-    },
-  },
-
-
-  setup() {
-    var competitions = ref<Competition[]>([])
-
-    onMounted(async () => {
-      await competitionStore().fetchCompetitions();
-      competitions.value = competitionStore().competitions;
     });
 
+    onMounted(async () => {
+      competitions.value = await competitionStore().competitions;
+    });
 
     return {
+      isFormVisible,
       competitions,
+      showForm,
+      hideForm,
+      handleInput,
+      formatDate,
+      deleteCompetition,
+      filteredCompetitions,
     };
   },
-}
+};
 </script>
 
 <style scoped>

@@ -2,29 +2,32 @@
 
 <template>
     <div class="popup">
-        <h2>Crear competencia</h2>
-        <!-- Form fields and inputs here -->
+        <span class="header">
+            <h2>Crear competencia</h2>
+            <UnPathfinderUnite class="header_icon" />
+        </span>
+
         <form @submit.prevent="submitForm">
             <div class="field">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" v-model="name" required>
+                <input type="text" id="name" v-model="name" placeholder="Ingrese el nombre">
             </div>
 
             <div class="field">
                 <label for="province">Provincia:</label>
-                <input type="text" id="province" v-model="province" required>
+                <select v-model="province" placeholder="Escoga la provincia">
+                    <option v-for="province in provinces" :key="province" :value="province">{{ province }} </option>
+                </select>
             </div>
 
             <div class="field">
                 <label for="description">Descripción:</label>
-                <input type="text" id="description" v-model="description" required>
+                <input type="text" id="description" v-model="description" placeholder="Ingrese la descripción">
             </div>
             <div class="field">
                 <label for="dates">Fecha Inicio y Fin:</label>
-                <VueDatePicker class="date-picker" v-model="date" range />
+                <VueDatePicker class="date-picker" v-model="date" range placeholder="Escoga las fechas" />
             </div>
-
-
         </form>
 
         <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
@@ -37,12 +40,15 @@
 <script lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { UnPathfinderUnite } from "@kalimahapps/vue-icons";
 import { competitionStore } from '@/stores/competitionStore';
 
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 
 import { ref, onMounted } from 'vue';
+
+import { useProvincesStore } from '@/stores/provinces';
 
 const date = ref();
 
@@ -55,15 +61,16 @@ onMounted(() => {
 export default {
 
     name: 'NewCompetition',
-    components: { VueDatePicker, Actions, ConfirmationDialog },
+    components: { VueDatePicker, Actions, ConfirmationDialog, UnPathfinderUnite },
 
     data() {
         return {
             showConfirmationDialog: false,
             name: '',
-            province: '',
+            province: 'Loja',
             description: '',
             date: date,
+            provinces: useProvincesStore().getProvinces
         };
     },
     methods: {
@@ -75,6 +82,7 @@ export default {
                 end_date: new Date(this.date[1]).toISOString(),
                 province: this.province,
             }
+
             await competitionStore().addCompetition(data);
 
             this.$emit('close');

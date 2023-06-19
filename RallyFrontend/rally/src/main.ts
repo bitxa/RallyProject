@@ -1,7 +1,6 @@
-import { createApp } from "vue";
+import { createApp, type DirectiveBinding } from "vue";
 import App from "./App.vue";
 import { createPinia } from "pinia";
-import { competitionStore } from "./stores/competitionStore";
 import router from "./router";
 
 // Vuetify
@@ -15,7 +14,32 @@ import "material-icons/iconfont/material-icons.css";
 
 const vuetify = createVuetify({
   components,
-  directives,
+  directives: {
+    numeric: {
+      mounted(element: any) {
+        element.addEventListener("input", (event: any) =>{
+          const input = event.target;
+          input.value = input.value.replace(/\D/g, "");
+        });
+      },
+    },
+    age: {
+      mounted(element: any) {
+        element.addEventListener("input", (event: any) => {
+          const input = event.target;
+          const value = input.value.replace(/\D/g, "");
+          const numericValue = parseInt(value, 10);
+          if (isNaN(numericValue) || numericValue < 0 || numericValue > 100 ) {
+            input.value = value.slice(0, -1); 
+          } else {
+            input.value = numericValue.toString().replace(/^0+/, ""); 
+          }
+        });
+      },
+    },
+    
+    ...directives,
+  },
 });
 
 const pinia = createPinia();

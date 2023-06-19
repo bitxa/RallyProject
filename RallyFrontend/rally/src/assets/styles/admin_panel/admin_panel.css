@@ -14,7 +14,7 @@ aside {
   position: sticky;
   flex-direction: column;
   min-height: 100%;
-  background-color: var(--backgroundcolor_dark);
+  background-color: var(--aside-backgroundcolor_dark);
   border-right: 0.3vh solid #424449;
   align-items: center;
   color: var(--fontcolor_dark);
@@ -40,10 +40,11 @@ li {
 }
 
 .rally_logo {
-  width: 40vh;
+  width: 100%;
   height: auto;
   margin: 3vh;
   color: var(--fontcolor_dark);
+  object-fit: contain;
 }
 
 .user {
@@ -64,6 +65,7 @@ li {
 .user .admin_image {
   -webkit-clip-path: circle(50% at 50% 50%);
   clip-path: circle(50% at 50% 50%);
+  
   width: 14vh;
   height: auto;
   margin: 3vh;

@@ -1,6 +1,6 @@
 <template>
     <div class="actions">
-        <button type="submit" id="create" @click="acceptForm">Crear</button>
+        <button type="button" id="create" @click="acceptForm">Crear</button>
         <button type="button" id="cancel" @click="cancelForm">Cancelar</button>
     </div>
 </template>

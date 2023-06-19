@@ -26,7 +26,7 @@
 
 .time h1 {
   font-size: 15vh;
-  color: var(--fontcolor_dark);
+  color: var(--secondary_fontcolor_dark);
 }
 
 strong {
@@ -50,7 +50,8 @@ strong {
   font-weight: 600;
   border-style: none;
   background-color: var(--backgroundcolor_dark);
-  color: var(--fontcolor_dark);
+  color: var(--secondary_fontcolor_dark);
+
   border-radius: 12px;
   height: 4vh;
   width: 20%;
@@ -59,4 +60,9 @@ strong {
 .time button:hover {
   color: var(--backgroundcolor_dark);
   background-color: var(--input_backgroundcolor_dark);
+}
+
+
+.info_message {
+  color: var(--secondary_fontcolor_dark);
 }

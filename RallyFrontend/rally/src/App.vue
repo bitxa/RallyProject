@@ -7,7 +7,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+import { competitionStore } from './stores/competitionStore';
 
 export default defineComponent({
   name: 'App',
@@ -16,6 +17,12 @@ export default defineComponent({
     return {
 
     }
+  },
+
+  setup() {
+    onMounted(async () => {
+      await competitionStore().fetchCompetitions();
+    })
   },
 })
 </script>

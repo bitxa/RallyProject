@@ -2,34 +2,38 @@
 
 <template>
     <div class="popup">
-        <h2>Crear circuito</h2>
-        <!-- Form fields and inputs here -->
+
         <form @submit.prevent="submitForm">
+            <span class="header">
+                <h2>Crear circuito</h2>
+                <FaRoad class="header_icon" />
+            </span>
+
             <div class="field">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" v-model="name" required>
+                <input type="text" id="name" v-model="name" placeholder="Ingrese el nombre">
             </div>
 
             <div class="field">
                 <label for="description">Descripción:</label>
-                <input type="text" id="description" v-model="description" required>
+                <input type="text" id="description" v-model="description" placeholder="Ingrese la descripción">
             </div>
 
             <div class="field">
                 <label for="track_length">Longitud:</label>
-                <input type="text" id="track_length" placeholder="km" @input="restrictToNumeric" v-model="track_length"
-                    required>
+                <input type="number" id="track_length" v-model="track_length" v-numeric placeholder="Km">
             </div>
 
             <div class="field">
                 <label for="location">Locación:</label>
-                <input type="text" id="location" v-model="location" required>
+                <input type="text" id="location" v-model="location" placeholder="Ingrese la locación">
             </div>
         </form>
 
         <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
         <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
             :dialog="'¿Seguro que deseas agrear un nuevo circuito?'" @cancel="closeConfirmation" />
+
     </div>
 </template>
 
@@ -39,12 +43,22 @@ import Actions from "@/components/menu_entities/floating-forms/fragments/Actions
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 
 import { competitionStore } from '@/stores/competitionStore';
-import { apiService } from '@/services/apiService';
+import type { Competition } from '../interfaces/Interfaces';
+import { type PropType } from "vue";
 
+import { FaRoad } from "@kalimahapps/vue-icons";
 
 export default {
-    components: { Actions, ConfirmationDialog },
+    components: { Actions, ConfirmationDialog, FaRoad },
     name: 'NewCompetence',
+
+
+    props: {
+        competition: {
+            type: Object as PropType<Competition>,
+            required: false,
+        },
+    },
     data() {
         return {
             showConfirmationDialog: false,
@@ -57,16 +71,15 @@ export default {
     methods: {
         async submitForm() {
             const data = {
+                competition_id: this.competition?._id,
                 name: this.name,
                 description: this.description,
                 track_lenght: parseFloat(this.track_length),
                 location: this.location
             }
 
-            console.log(data);
+            await competitionStore().addCircuit(data);
 
-            const result = await apiService.postData(data, 'circuits')
-            console.log(result);
             this.$emit('close');
         },
 

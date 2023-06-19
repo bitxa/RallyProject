@@ -28,7 +28,7 @@ export default {
             if (file) {
                 this.logoFile = file;
                 this.logoPreviewUrl = URL.createObjectURL(file);
-                this.$emit('imageSelected', file);
+                this.$emit('imageSelected', this.logoFile);
             }
             event.target.value = '';
         },

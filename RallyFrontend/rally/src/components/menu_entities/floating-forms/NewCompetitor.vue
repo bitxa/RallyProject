@@ -2,45 +2,49 @@
 
 <template>
     <div class="popup">
-        <h2>Crear competidor</h2>
-        <!-- Form fields and inputs here -->
+        <span class="header">
+            <h2>Agregar {{ title }}</h2>
+            <UnPathfinderUnite class="header_icon" />
+        </span>
+
         <form @submit.prevent="submitForm">
             <div class="field">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" v-model="name" required>
+                <input type="text" id="name" v-model="name" placeholder="Ingrese el nombre">
             </div>
 
             <div class="field">
                 <label for="age">Edad:</label>
-                <input type="text" id="age" v-model="age" required>
+                <input type="number" v-age id="age" v-model="age" placeholder="Ingrese la edad">
             </div>
 
             <div class="field">
                 <label for="identification">Identificación (cédula)</label>
-                <input type="text" id="identification" v-model="identification" required>
+                <input type="text" id="identification" v-model="identification" placeholder="Ingrese la cédula">
             </div>
 
             <div class="field">
                 <label for="blood_type">Tipo sangre:</label>
-                <input type="text" id="blood_type" v-model="blood_type" required>
+                <input type="text" id="blood_type" v-model="bloodType" placeholder="Ingrese el tipo de sangre">
             </div>
 
             <div class="field">
                 <label for="emergency_contact">Contacto emergencia:</label>
-                <input type="text" id="emergency_contact" v-model="emergency_contact" required>
+                <input type="text" id="emergency_contact" v-model="emergencyContact"
+                    placeholder="Ingrese el contacto de emergencia">
             </div>
 
             <div class="field">
                 <label for="province">Provincia:</label>
-                <input type="text" id="province" v-model="province" required>
+                <input type="text" id="province" v-model="province" placeholder="Escoga la provincia">
             </div>
 
             <div class="field">
                 <label for="city">Ciudad:</label>
-                <input type="text" id="city" v-model="city" required>
+                <input type="text" id="city" v-model="city" placeholder="Escoga la ciudad">
             </div>
         </form>
-
+        
         <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
         <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
             :dialog="'¿Seguro que deseas agrear un nuevo competidor ?'" @cancel="closeConfirmation" />
@@ -49,52 +53,60 @@
 </template>
 
 <script lang="ts">
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
-
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
+import { competitionStore } from '@/stores/competitionStore';
+import type { Competitor } from '../interfaces/Interfaces';
 
-import { ref, onMounted } from 'vue';
-import { apiService } from '@/services/apiService';
 
 
 export default {
-
-    components: { VueDatePicker, Actions, ConfirmationDialog },
+    components: { Actions, ConfirmationDialog },
     name: 'NewCompetitor',
 
     data() {
         return {
             showConfirmationDialog: false,
             name: '',
-            age: '',
+            age: 0,
             identification: '',
-            blood_type: '',
-            emergency_contact: '',
+            bloodType: '',
+            emergencyContact: '',
             province: '',
             city: '',
+            role: this.competitor_role,
         };
+    },
+
+    props: {
+        competitor_role: {
+            type: String,
+            required: true,
+        },
+
+        title: {
+            type: String,
+            required: true,
+        },
     },
     methods: {
         async submitForm() {
-            const data = {
+            const newCompetitor = {
                 name: this.name,
                 age: this.age,
                 identification: this.identification,
-                blood_type: this.blood_type,
-                emergency_contact: this.emergency_contact,
+                blood_type: this.bloodType,
+                emergency_contact: this.emergencyContact,
                 province: this.province,
-                city: this.city
+                city: this.city,
+                role: this.role
             }
 
-            console.log('Form submitted:');
-            console.log(data);
-
-            await apiService.postData(data, 'competitions')
-
+            const competitorCreated: Competitor = await competitionStore().addCompetitor(newCompetitor);
             this.$emit('close');
+            this.$emit('new_competitor', competitorCreated);
         },
+
         cancelForm() {
             this.$emit('close');
         },

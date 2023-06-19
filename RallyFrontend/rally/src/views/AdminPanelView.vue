@@ -1,7 +1,6 @@
 
 <style src="@/assets/styles/admin_panel/admin_panel.css"></style>
 
-
 <template>
     <v-container fluid class="admin-panel">
 
@@ -28,7 +27,7 @@
                     </span>
                 </button>
 
-                <button type="button" class="menu_button" @click="selectMenuItem('competences')"
+                <button type="button" class="menu_button" @click="selectMenuItem('competitions')"
                     :class="{ active: currentComponent === 'CompetitionComponent' }">
                     <span>
                         <UnPathfinderUnite class=" menu_icon" />
@@ -69,15 +68,6 @@
                     </span>
                 </button>
 
-                <button type="button" class="menu_button" @click="selectMenuItem('competitors')"
-                    :class="{ active: currentComponent === 'CompetitorsComponent' }">
-                    <span>
-                        <AnOutlinedUsergroupAdd class="menu_icon" />
-                    </span>
-                    <span>
-                        <p> Competidores </p>
-                    </span>
-                </button>
 
                 <button type="button" class="menu_button" @click="selectMenuItem('sponsors')"
                     :class="{ active: currentComponent === 'SponsorsComponent' }">
@@ -90,7 +80,6 @@
                 </button>
             </div>
             <v-switch v-model="lightMode" label="Dark Mode" inset @change="toggleDarkMode"></v-switch>
-
         </aside>
 
         <main :class="{ 'full-width': !showMenu }">
@@ -119,13 +108,11 @@ import { CaCategoryNewEach } from "@kalimahapps/vue-icons";
 import CompetitionComponent from "@/components/menu_entities/CompetitionComponent.vue";
 import TimesComponent from "@/components/menu_entities/TimesComponent.vue";
 import CircuitsComponent from "@/components/menu_entities/CircuitsComponent.vue";
-import CompetitorsComponent from "@/components/menu_entities/CompetitorsComponent.vue";
 import SponsorsComponent from "@/components/menu_entities/SponsorsComponent.vue";
 import TeamsComponent from "@/components/menu_entities/TeamsComponent.vue";
 import CategoriesComponent from "@/components/menu_entities/CategoriesComponent.vue";
 
 //Vuex Storage
-
 export default {
     name: 'AdminPanelView',
     components: {
@@ -140,7 +127,6 @@ export default {
         CompetitionComponent,
         TimesComponent,
         CircuitsComponent,
-        CompetitorsComponent,
         SponsorsComponent,
         TeamsComponent,
         CategoriesComponent,
@@ -159,14 +145,11 @@ export default {
                 case 'times':
                     this.currentComponent = 'TimesComponent';
                     break;
-                case 'competences':
+                case 'competitions':
                     this.currentComponent = 'CompetitionComponent';
                     break;
                 case 'circuits':
                     this.currentComponent = 'CircuitsComponent';
-                    break;
-                case 'competitors':
-                    this.currentComponent = 'CompetitorsComponent';
                     break;
                 case 'categories':
                     this.currentComponent = 'CategoriesComponent';
@@ -199,8 +182,8 @@ export default {
         toggleDarkMode() {
             this.lightMode = !this.lightMode;
         },
-
     },
+
 
 }
 </script>

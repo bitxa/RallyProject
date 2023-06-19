@@ -1,23 +1,28 @@
 <template>
     <v-dialog :value="dialog" max-width="500px" persistent transition="dialog-top-transition">
         <v-card class="confirmation-dialog">
-            <v-card-title class="headline"><strong>Confirmación</strong></v-card-title>
+            <v-card-title class="headline">Confirmación</v-card-title>
             <v-card-text>
                 {{ dialog }}
             </v-card-text>
             <v-card-actions>
-                <v-btn color="success" @click="handleConfirm">Confirmar</v-btn>
-                <v-btn color="error" @click="handleCancel">Cancelar</v-btn>
+                <v-btn color="success" @click="handleConfirm()">Confirmar</v-btn>
+                <v-btn color="error" @click="handleCancel()">Editar</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
 
 
-<style scoped>
+<style>
 .confirmation-dialog {
     z-index: 9999;
 }
+.headline {
+    color: #41444B;
+    font-weight: 800;
+}
+
 </style>
 
 <script lang="ts">
@@ -34,7 +39,7 @@ export default {
             this.$emit('confirm');
         },
         handleCancel() {
-            this.$emit('cancel');
+            this.$emit('edit');
         },
     },
 };

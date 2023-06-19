@@ -1,18 +1,4 @@
-/* eslint-disable prettier/prettier */
-//import { Type } from 'class-transformer';
-import {
-  IsEmpty,
-  //IsArray,
-  //IsEmpty,
-  IsNotEmpty,
-  IsOptional,
-  //IsOptional,
-  IsString,
-  //ValidateNested,
-} from 'class-validator';
-
-import { Competitor } from 'src/competitors/schema/competitor.schema';
-//import { TeamResult } from 'src/teams_results/schema/team_result.schema';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateTeamDto {
   @IsNotEmpty()
@@ -20,25 +6,11 @@ export class CreateTeamDto {
   readonly name: string;
 
   @IsNotEmpty()
-  @IsString()
-  readonly car_number: string;
+  readonly car_number: number;
 
-  @IsEmpty()
   @IsOptional()
-  readonly driver: Competitor;
+  readonly driver_id: string;
 
-  @IsEmpty()
   @IsOptional()
-  readonly copilot: Competitor;
-
-  /*
-  @IsEmpty()
-  readonly current_category: string;
-  @IsOptional()
-  @IsEmpty()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => TeamResult)
-  readonly all_results: TeamResult[];
-  */
+  readonly copilot_id: string;
 }

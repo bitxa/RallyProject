@@ -3,9 +3,13 @@ import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 export class CreateSponsorDto {
   @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  readonly circuit_id: string;
 
   @IsNotEmpty()
+  @IsString()
+  readonly name: string;
+
+  @IsOptional()
   @IsString()
   readonly description: string;
 
@@ -14,9 +18,9 @@ export class CreateSponsorDto {
   @IsUrl()
   readonly logo: string;
 
+  @IsOptional()
   @IsString()
   @IsUrl()
-  @IsOptional()
   readonly website: string;
 
   @IsOptional()

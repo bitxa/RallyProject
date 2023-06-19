@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -8,38 +7,39 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+
 import { TeamsService } from './team.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('competitions')
-@Controller('competitions')
+@ApiTags('teams')
+@Controller('teams')
 export class TeamController {
-  constructor(private readonly competitionsService: TeamsService) {}
+  constructor(private readonly teamsService: TeamsService) {}
 
   @Post()
   create(@Body() createCompetitionDto: CreateTeamDto) {
-    return this.competitionsService.create(createCompetitionDto);
+    return this.teamsService.create(createCompetitionDto);
   }
 
   @Get()
   findAll() {
-    return this.competitionsService.findAll();
+    return this.teamsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.competitionsService.findOne(id);
+    return this.teamsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompetitionDto: UpdateTeamDto) {
-    return this.competitionsService.update(id, updateCompetitionDto);
+  update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
+    return this.teamsService.update(id, updateTeamDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.competitionsService.remove(id);
+    return this.teamsService.remove(id);
   }
 }

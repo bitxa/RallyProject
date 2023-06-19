@@ -6,6 +6,9 @@ export type SponsorDocument = HydratedDocument<Sponsor>;
 @Schema()
 export class Sponsor {
   @Prop()
+  circuit_id: string;
+
+  @Prop()
   name: string;
 
   @Prop()

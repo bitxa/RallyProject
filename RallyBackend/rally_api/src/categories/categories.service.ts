@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Param } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,28 +11,31 @@ export class CategoriesService {
     @InjectModel(Category.name)
     private categoriesModule: Model<CategoriesDocument>,
   ) {}
+
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     return await this.categoriesModule.create(createCategoryDto);
   }
 
   async findAll(): Promise<Category[]> {
-    return await this.categoriesModule.find().populate('teams');
+    return await this.categoriesModule.find();
   }
 
-  async findOne(id: string): Promise<Category> {
-    return await this.categoriesModule.findById(id).populate('teams');
+  async findOne(@Param('id') id: string): Promise<Category> {
+    return await this.categoriesModule.findById(id);
+  }
+
+  async findByCircuitId(@Param('circuit_id') circuitId: string) {
+    return this.categoriesModule.find({ circuit_id: circuitId }).exec();
   }
 
   async update(
     id: string,
     updateCategoryDto: UpdateCategoryDto,
   ): Promise<Category> {
-    return await this.categoriesModule
-      .findByIdAndUpdate(id, updateCategoryDto)
-      .populate('teams');
+    return await this.categoriesModule.findByIdAndUpdate(id, updateCategoryDto);
   }
 
   async remove(id: string): Promise<Category> {
-    return await this.categoriesModule.findByIdAndDelete(id).populate('teams');
+    return await this.categoriesModule.findByIdAndDelete(id);
   }
 }

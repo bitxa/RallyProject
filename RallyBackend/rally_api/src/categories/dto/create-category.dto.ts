@@ -1,13 +1,4 @@
-//import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsEmpty,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  //ValidateNested,
-} from 'class-validator';
-//import { Team } from 'src/teams/schema/team.schema';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCategoryDto {
   @IsNotEmpty()
@@ -18,20 +9,12 @@ export class CreateCategoryDto {
   @IsString()
   readonly name: string;
 
-  @IsEmpty()
   @IsOptional()
   @IsString()
   readonly description: string;
 
   @IsArray()
-  @IsEmpty()
   @IsOptional()
   @IsString({ each: true })
   readonly participantTeamsIds: string[];
-  /*
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Team)
-  readonly teams: Team[];
-  */
 }

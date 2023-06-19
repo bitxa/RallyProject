@@ -1,39 +1,21 @@
-//import { Type } from 'class-transformer';
-import {
-  IsEmpty,
-  IsNotEmpty,
-  //IsNumber,
-  IsOptional,
-  IsString,
-  //ValidateNested,
-} from 'class-validator';
-//import { Category } from 'src/categories/schema/category.schema';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCompetitorDto {
   @IsNotEmpty()
   @IsString()
-  readonly team_id: string;
-
-  @IsNotEmpty()
-  @IsString()
   readonly name: string;
 
-  @IsEmpty()
   @IsOptional()
-  @IsString()
   readonly age: number;
 
-  @IsEmpty()
   @IsOptional()
   @IsString()
   readonly identification: string;
 
-  @IsEmpty()
   @IsOptional()
   @IsString()
   readonly blood_type: string;
 
-  @IsEmpty()
   @IsOptional()
   @IsString()
   readonly emergency_contact: string;
@@ -49,10 +31,4 @@ export class CreateCompetitorDto {
   @IsNotEmpty()
   @IsString()
   readonly role: string;
-  /*
-  @IsNotEmpty()
-  @ValidateNested()
-  @Type(() => Category)
-  readonly current_category: Category;
-  */
 }

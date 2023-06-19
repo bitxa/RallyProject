@@ -10,22 +10,28 @@ export class CircuitsService {
   constructor(
     @InjectModel(Circuit.name) private circuitsModule: Model<CircuitsDocument>,
   ) {}
+
   async create(createCircuitDto: CreateCircuitDto): Promise<Circuit> {
     const circuitCreate = await this.circuitsModule.create(createCircuitDto);
+    console.log(circuitCreate);
     return circuitCreate;
   }
 
   async findAll(): Promise<Circuit[]> {
-    const listCircuits = await this.circuitsModule
-      .find()
-      .populate('sponsor')
-      .populate('category');
+    const listCircuits = await this.circuitsModule.find();
     return listCircuits;
   }
 
   async findOne(id: string): Promise<Circuit> {
-    const circuit = await this.circuitsModule.findById(id); //.populate('sponsor')//.populate('category');
+    const circuit = await this.circuitsModule.findById(id);
     return circuit;
+  }
+
+  async findByCompetitionId(competitionId: string): Promise<Circuit[]> {
+    const circuits = await this.circuitsModule.find({
+      competition_id: competitionId,
+    });
+    return circuits;
   }
 
   async update(
@@ -35,14 +41,12 @@ export class CircuitsService {
     const updatedCircuit = await this.circuitsModule.findByIdAndUpdate(
       id,
       updateCircuitDto,
-    ); //.populate('sponsor').//populate('category');
+    );
     return updatedCircuit;
   }
 
   async remove(id: string): Promise<Circuit> {
     const deletedCircuit = await this.circuitsModule.findByIdAndDelete(id);
-    //.populate('sponsor')
-    //.populate('category');
     return deletedCircuit;
   }
 }

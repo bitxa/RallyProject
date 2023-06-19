@@ -20,25 +20,24 @@ export class CompetitionsService {
   }
 
   async findAll(): Promise<Competition[]> {
-    return await this.competitionsModule.find().populate('circuits');
+    return await this.competitionsModule.find();
   }
 
   async findOne(id: string): Promise<Competition> {
-    return await this.competitionsModule.findById(id).populate('circuits');
+    return await this.competitionsModule.findById(id);
   }
 
   async update(
     id: string,
     updateCompetitionDto: UpdateCompetitionDto,
   ): Promise<Competition> {
-    return await this.competitionsModule
-      .findByIdAndUpdate(id, updateCompetitionDto)
-      .populate('circuits');
+    return await this.competitionsModule.findByIdAndUpdate(
+      id,
+      updateCompetitionDto,
+    );
   }
 
   async remove(id: string): Promise<Competition> {
-    return await this.competitionsModule
-      .findByIdAndDelete(id)
-      .populate('circuits');
+    return await this.competitionsModule.findByIdAndDelete(id);
   }
 }

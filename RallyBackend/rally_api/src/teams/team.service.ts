@@ -9,31 +9,28 @@ import { Model } from 'mongoose';
 export class TeamsService {
   constructor(
     @InjectModel(Team.name)
-    private competitionsModule: Model<TeamDocument>,
+    private teamsModule: Model<TeamDocument>,
   ) {}
 
-  async create(createCompetitionDto: CreateTeamDto): Promise<Team> {
-    console.log(createCompetitionDto);
-    return await this.competitionsModule.create(createCompetitionDto);
+  async create(createTeamDto: CreateTeamDto): Promise<Team> {
+    console.log(createTeamDto);
+    return await this.teamsModule.create(createTeamDto);
   }
 
   async findAll(): Promise<Team[]> {
-    return await this.competitionsModule.find().populate('circuits');
+    return await this.teamsModule.find();
   }
 
   async findOne(id: string): Promise<Team> {
-    return await this.competitionsModule.findById(id).populate('circuits');
+    return await this.teamsModule.findById(id);
   }
 
-  async update(id: string, updateCompetitionDto: UpdateTeamDto): Promise<Team> {
-    return await this.competitionsModule
-      .findByIdAndUpdate(id, updateCompetitionDto)
-      .populate('circuits');
+  async update(id: string, updateTeamDto: UpdateTeamDto): Promise<Team> {
+    console.log(updateTeamDto);
+    return await this.teamsModule.findByIdAndUpdate(id, updateTeamDto);
   }
 
   async remove(id: string): Promise<Team> {
-    return await this.competitionsModule
-      .findByIdAndDelete(id)
-      .populate('circuits');
+    return await this.teamsModule.findByIdAndDelete(id);
   }
 }

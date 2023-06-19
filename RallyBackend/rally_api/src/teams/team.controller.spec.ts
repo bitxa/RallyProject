@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TeamController } from './team.controller';
 import { TeamsService } from './team.service';
 
-describe('CompetitionsController', () => {
+describe('TeamsController', () => {
   let controller: TeamController;
 
   beforeEach(async () => {

@@ -30,7 +30,7 @@ export class SocketClient implements OnModuleInit {
       const timeString = currentTime.split('T')[1].slice(0, -1);
 
       this.emitTime(timeString);
-    }, 4000);
+    }, 10000);
   }
 
   consumeEvent() {

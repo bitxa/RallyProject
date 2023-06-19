@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Param } from '@nestjs/common';
 import { CreateSponsorDto } from './dto/create-sponsor.dto';
 import { UpdateSponsorDto } from './dto/update-sponsor.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,6 +11,7 @@ export class SponsorsService {
     @InjectModel(Sponsor.name)
     private sponsorsModule: Model<SponsorDocument>,
   ) {}
+
   async create(createSponsorDto: CreateSponsorDto): Promise<Sponsor> {
     return await this.sponsorsModule.create(createSponsorDto);
   }
@@ -32,5 +33,9 @@ export class SponsorsService {
 
   async remove(id: string): Promise<Sponsor> {
     return await this.sponsorsModule.findByIdAndDelete(id);
+  }
+
+  async findByCircuitId(@Param('circuit_id') circuitId: string) {
+    return this.sponsorsModule.find({ circuit_id: circuitId }).exec();
   }
 }

@@ -18,8 +18,8 @@ export class CompetitorsController {
   constructor(private readonly competitorsService: CompetitorsService) {}
 
   @Post()
-  create(@Body() createDriverDto: CreateCompetitorDto) {
-    return this.competitorsService.create(createDriverDto);
+  create(@Body() createCompetitorDto: CreateCompetitorDto) {
+    return this.competitorsService.create(createCompetitorDto);
   }
 
   @Get()
@@ -35,9 +35,9 @@ export class CompetitorsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateDriverDto: UpdateCompetitorDto,
+    @Body() updateCompetitorDto: UpdateCompetitorDto,
   ) {
-    return this.competitorsService.update(id, updateDriverDto);
+    return this.competitorsService.update(id, updateCompetitorDto);
   }
 
   @Delete(':id')

@@ -11,6 +11,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { CompetitionsModule } from './competitions/competitions.module';
 import { SponsorsModule } from './sponsors/sponsors.module';
 import { CompetitorsModule } from './competitors/competitors.module';
+import { TeamsModule } from './teams/team.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CompetitorsModule } from './competitors/competitors.module';
     CircuitsModule,
     CategoriesModule,
     CompetitionsModule,
+    TeamsModule,
     SponsorsModule,
     CompetitorsModule,
   ],

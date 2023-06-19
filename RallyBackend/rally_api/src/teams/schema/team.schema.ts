@@ -1,8 +1,5 @@
-//import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-//import { Circuit } from 'src/circuits/schema/circuit.schema';
-import { Competitor } from 'src/competitors/schema/competitor.schema';
 
 export type TeamDocument = HydratedDocument<Team>;
 
@@ -12,21 +9,12 @@ export class Team {
   name: string;
 
   @Prop()
-  car_number: string;
+  car_number: number;
 
   @Prop()
-  driver: Competitor;
+  driver: string;
 
   @Prop()
-  copilot: Competitor;
-  /*
-  @Prop()
-  current_category: string;
-
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Competitor' }],
-  })
-circuits: Circuit[];
-  */
+  copilot: string;
 }
-export const CompetitionsSchema = SchemaFactory.createForClass(Team);
+export const TeamsSchema = SchemaFactory.createForClass(Team);

@@ -1,15 +1,4 @@
-/* eslint-disable prettier/prettier */
-//import { Type } from 'class-transformer';
-import {
-  //IsArray,
-  IsDateString,
-  //IsEmpty,
-  IsNotEmpty,
-  //sOptional,
-  IsString,
-  //ValidateNested,
-} from 'class-validator';
-//import { Circuit } from 'src/circuits/schema/circuit.schema';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCompetitionDto {
   @IsNotEmpty()
@@ -31,15 +20,4 @@ export class CreateCompetitionDto {
   @IsNotEmpty()
   @IsString()
   readonly province: string;
-
-  /*
-   * @IsNotEmpty() replaced with with @IsEmpty()
-   * A competition can be created without any circuit at the beginning.
-  @IsOptional()
-  @IsEmpty()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Circuit)
-  readonly circuits: Circuit[];
-   */
 }

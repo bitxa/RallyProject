@@ -11,17 +11,16 @@ export class CompetitorsService {
     @InjectModel(Competitor.name)
     private driversModule: Model<CompetitorDocument>,
   ) {}
+
   async create(createDriverDto: CreateCompetitorDto): Promise<Competitor> {
     return await this.driversModule.create(createDriverDto);
   }
 
   async findAll(): Promise<Competitor[]> {
-    //return await this.driversModule.find().populate('categories');
     return await this.driversModule.find();
   }
 
   async findOne(id: string): Promise<Competitor> {
-    //return await this.driversModule.findById(id).populate('categories');
     return await this.driversModule.findById(id);
   }
 
@@ -29,10 +28,10 @@ export class CompetitorsService {
     id: string,
     updateDriverDto: UpdateCompetitorDto,
   ): Promise<Competitor> {
-    return await this.driversModule.findByIdAndUpdate(id, updateDriverDto); //.populate('categories');
+    return await this.driversModule.findByIdAndUpdate(id, updateDriverDto);
   }
 
   async remove(id: string): Promise<Competitor> {
-    return await this.driversModule.findByIdAndDelete(id); //.populate('categories');
+    return await this.driversModule.findByIdAndDelete(id);
   }
 }

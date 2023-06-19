@@ -19,7 +19,7 @@ export class Competitor {
   blood_type: string;
 
   @Prop()
-  emergencyContact: string;
+  emergency_contact: string;
 
   @Prop()
   province: string;
@@ -27,6 +27,8 @@ export class Competitor {
   @Prop()
   city: string;
 
+  @Prop()
+  role: string;
   /*
   @Prop()
   current_category: Category;

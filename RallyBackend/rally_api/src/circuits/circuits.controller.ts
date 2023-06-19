@@ -19,7 +19,6 @@ export class CircuitsController {
 
   @Post()
   create(@Body() createCircuitDto: CreateCircuitDto) {
-    console.log(createCircuitDto);
     return this.circuitsService.create(createCircuitDto);
   }
 
@@ -31,6 +30,11 @@ export class CircuitsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.circuitsService.findOne(id);
+  }
+
+  @Get('competition/:competition_id')
+  findByCompetitionId(@Param('competition_id') competitionId: string) {
+    return this.circuitsService.findByCompetitionId(competitionId);
   }
 
   @Patch(':id')

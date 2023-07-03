@@ -1,5 +1,7 @@
 
 <style src="@/assets/styles/admin_panel/admin_panel.css"></style>
+<style src="@/assets/styles/pagination.css"></style>
+
 
 <template>
     <v-container fluid class="admin-panel">

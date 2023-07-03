@@ -1,9 +1,9 @@
-// store.ts
 import { defineStore } from "pinia";
 import {
   type Category,
   type Circuit,
   type Competition,
+  type Competitor,
   type Sponsor,
   type Team,
 } from "@/components/menu_entities/interfaces/Interfaces";
@@ -13,11 +13,11 @@ import { ref } from "vue";
 export const competitionStore = defineStore("competitionStore", {
   state: () => ({
     competitions: ref<Array<Competition>>([]),
+    competitors: ref<Array<Competitor>>([]),
     circuits: ref<Array<Circuit>>([]),
     categories: ref<Array<Category>>([]),
     teams: ref<Array<Team>>([]),
     sponsors: ref<Array<Sponsor>>([]),
-
   }),
 
   actions: {
@@ -29,6 +29,58 @@ export const competitionStore = defineStore("competitionStore", {
         console.error("Error fetching competitions:", error);
       }
     },
+
+    async fetchCompetitors() {
+      try {
+        const response = await apiService.getData("competitors");
+        this.competitors = response.data;
+      } catch (error) {
+        console.error("Error fetching competitors:", error);
+        throw error;
+      }
+    },
+
+    async fetchCircuits() {
+      try {
+        const response = await apiService.getData("circuits");
+        this.circuits = response.data;
+      } catch (error) {
+        console.error("Error fetching circuits:", error);
+        throw error;
+      }
+    },
+
+    async fetchCategories() {
+      try {
+        const response = await apiService.getData("categories");
+        this.categories = response.data;
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        throw error;
+      }
+    },
+
+    async fetchTeams() {
+      try {
+        const response = await apiService.getData("teams");
+        this.teams = response.data;
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+        throw error;
+      }
+    },
+
+    async fetchSponsors() {
+      try {
+        const response = await apiService.getData("sponsors");
+        this.sponsors = response.data;
+      } catch (error) {
+        console.error("Error fetching sponsors:", error);
+        throw error;
+      }
+    },
+
+    // Other fetch methods for different entities...
 
     async deleteCompetition(index: number) {
       try {
@@ -99,11 +151,10 @@ export const competitionStore = defineStore("competitionStore", {
       }
     },
 
-
     async addCategory(data: Object) {
       try {
         const newCategory = await apiService.postData(data, "categories");
-        this.circuits.push(newCategory.data);
+        this.categories.push(newCategory.data);
       } catch (error) {
         console.log(error);
         throw error;
@@ -155,10 +206,10 @@ export const competitionStore = defineStore("competitionStore", {
 
     async getCategoriesByCircuitID(circuit_id: string) {
       try {
-        const categoriesByCompetitionID = await apiService.getData(
+        const categoriesByCircuitID = await apiService.getData(
           `categories/circuit/${circuit_id}`
         );
-        this.categories = categoriesByCompetitionID.data;
+        this.categories = categoriesByCircuitID.data;
       } catch (error) {
         throw error;
       }
@@ -166,35 +217,66 @@ export const competitionStore = defineStore("competitionStore", {
 
     async getSponsorsByCircuitID(circuit_id: string) {
       try {
-        const getSponsorsByCircuitID = await apiService.getData(
+        const sponsorsByCircuitID = await apiService.getData(
           `sponsors/circuit/${circuit_id}`
         );
-        this.sponsors = getSponsorsByCircuitID.data;
+        this.sponsors = sponsorsByCircuitID.data;
       } catch (error) {
         throw error;
       }
     },
 
-    async patchCategory(category: Object = ' ', category_id: String) {
+    async patchCompetition(competitionId: string, data: Object) {
       try {
-        const response = await apiService.patchData(category, `categories/${category_id}`);
-        return response.data;
+        const updatedCompetition = await apiService.patchData(data, `competitions/${competitionId}`);
+        const index = this.competitions.findIndex(competition => competition._id === competitionId);
+        this.competitions[index] = updatedCompetition.data;
       } catch (error) {
         throw error;
       }
     },
 
-    async getCategoryParticipantTeamsByIds(teams_ids: Array<string>) {
+    async patchCircuit(circuitId: string, data: Object) {
       try {
-
-        const teamResponses = await Promise.all(
-          teams_ids.map((team_id) => apiService.getData(`teams/${team_id}`))
-        );
-
-        this.teams = teamResponses.map((response) => response.data);
+        const updatedCircuit = await apiService.patchData(data, `circuits/${circuitId}`);
+        const index = this.circuits.findIndex(circuit => circuit._id === circuitId);
+        this.circuits[index] = updatedCircuit.data;
       } catch (error) {
         throw error;
       }
     },
+
+    async patchCategory(categoryId: string, data: Object) {
+      try {
+        const updatedCategory = await apiService.patchData(data, `categories/${categoryId}`);
+        const index = this.categories.findIndex(category => category._id === categoryId);
+        this.categories[index] = updatedCategory.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+
+    async patchTeam(teamId: string, data: Object) {
+      try {
+        const updatedTeam = await apiService.patchData(data, `teams/${teamId}`);
+        const index = this.teams.findIndex(team => team._id === teamId);
+        this.teams[index] = updatedTeam.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+
+    async patchSponsor(sponsorId: string, data: Object) {
+      try {
+        const updatedSponsor = await apiService.patchData(data, `sponsors/${sponsorId}`);
+        const index = this.sponsors.findIndex(sponsor => sponsor._id === sponsorId);
+        this.sponsors[index] = updatedSponsor.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+
+    // Other patch methods for different entities...
+
   },
 });

@@ -22,9 +22,13 @@
 
             <div class="field">
                 <label for="driver">Conductor:</label>
-                <input type="text" id="driver" v-model="driverName" placeholder="Escoga un conductor o agregue un nuevo">
+                <select v-model="driver" id="driver" placeholder="Escoge un conductor o agrega uno nuevo">
+                    <option v-for="competitor in competitors" :key="competitor.name" :value="competitor">
+                        {{ competitor.name }}
+                    </option>
+                </select>
                 <NewEntityButton :button_title="'Nuevo conductor'" @showForm="showNewDriverForm"
-                    style="align-self: center;  margin: 0%;" />
+                    style="align-self: center; margin: 0%;" />
 
                 <div v-if="isDriverFormVisible" class="overlay">
                     <NewCompetitor :competitor_role="'driver'" :title="'conductor'" @new_competitor="handleNewDriver"
@@ -34,9 +38,13 @@
 
             <div class="field">
                 <label for="copilot">Copiloto:</label>
-                <input type="text" id="copilot" v-model="copilotName" placeholder="Escoga un copiloto o agregue un nuevo">
+                <select v-model="copilot" id="copilot" placeholder="Escoge un copiloto o agrega uno nuevo">
+                    <option v-for="competitor in competitors" :key="competitor.name" :value="competitor">
+                        {{ competitor.name }}
+                    </option>
+                </select>
                 <NewEntityButton :button_title="'Nuevo copiloto'" @showForm="showNewCopilotForm"
-                    style="align-self: center;  margin: 0%;" />
+                    style="align-self: center; margin: 0%;" />
 
                 <div v-if="isCopilotFormVisible" class="overlay">
                     <NewCompetitor :competitor_role="'copilot'" :title="'copiloto'" @new_competitor="handleNewCopilot"
@@ -58,7 +66,7 @@ import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragme
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
 import type { Category, Competitor, Team } from "../interfaces/Interfaces";
-import type { PropType } from "vue";
+import { onMounted, type PropType } from "vue";
 import NewCompetitor from "./NewCompetitor.vue"
 import { competitionStore } from "@/stores/competitionStore";
 
@@ -77,10 +85,10 @@ export default {
             showConfirmationDialog: false,
             isDriverFormVisible: false,
             isCopilotFormVisible: false,
+            competitors: competitionStore().getCompetitors(),
+            //Team data
             name: '',
             carNumber: 0,
-            driverName: '',
-            copilotName: '',
             driver: null as Competitor | null,
             copilot: null as Competitor | null,
         };
@@ -104,7 +112,7 @@ export default {
             console.log('CATEGORY: ' + JSON.stringify(this.category));
 
 
-            await competitionStore().patchCategory(this.category, this.category?._id || ' ') ;
+            await competitionStore().patchCategory(this.category, this.category?._id || ' ');
 
             this.closeConfirmation();
             this.$emit('close');

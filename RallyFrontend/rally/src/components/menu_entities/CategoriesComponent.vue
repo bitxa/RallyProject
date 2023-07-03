@@ -1,23 +1,17 @@
-
 <template>
     <v-breadcrumbs class="breadcrumb">
         <div class="item">
             <label class="breadcrumbLabel">Competencia:</label>
-            <input type="text" v-model="selectedCompetitionName" list="competitionsForCategory-list" class="breadcrumbInput"
-                @input="handleSelectedCompetition" @change="handleSelectedCompetition">
-            <datalist id="competitionsForCategory-list">
-                <option v-for="competition in competitions" :key="competition._id" :value="competition.name">{{
-                    competition.name }}</option>
-            </datalist>
+            <v-autocomplete v-model="selectedCompetition" :items="competitions" item-text="name" return-object class="mx-3"
+                style="max-width: 300px; height: 45px" dense outlined dark color="#fff"
+                @change="handleSelectedCompetition"></v-autocomplete>
         </div>
 
         <div class="item">
             <label class="breadcrumbLabel">Circuito:</label>
-            <input type="text" v-model="selectedCircuitName" list="circuitsForCategory-list" class="breadcrumbInput"
-                @input="handleSelectedCircuit" @change="handleSelectedCircuit">
-            <datalist id="circuitsForCategory-list">
-                <option v-for="circuit in circuits" :key="circuit._id" :value="circuit.name">{{ circuit.name }}</option>
-            </datalist>
+            <v-autocomplete v-model="selectedCircuit" :items="circuits" item-text="name" return-object class="mx-3"
+                style="max-width: 300px; height: 45px" dense outlined dark color="#fff"
+                @change="handleSelectedCircuit"></v-autocomplete>
         </div>
     </v-breadcrumbs>
 
@@ -26,12 +20,12 @@
 
     <NewEntityButton :button_title="'Crear categoria'" @showForm="showForm" />
 
-    <div class="container">
+    <div class="container grid-container">
         <div v-if="isFormVisible" class="overlay">
             <NewCategory @close="hideForm" :circuit="selectedCircuit" />
         </div>
 
-        <div class="box" v-for="(category, index) in filteredCategories" :key="category._id">
+        <div class="box grid-item" v-for="(category, index) in paginatedCategories" :key="category._id">
             <span>
                 <h2>{{ category.name }}</h2>
                 <ActionsForEntity @deleteItem="deleteCategory(index)" />
@@ -48,6 +42,8 @@
             </div>
         </div>
     </div>
+
+    <v-pagination v-model="currentPage" :length="numberOfPages" :total-visible="5"></v-pagination>
 </template>
 
 <script lang="ts">
@@ -82,6 +78,8 @@ export default {
         const selectedCategoryName = ref('');
         const selectedCircuit = ref<Circuit | undefined>();
         const selectedCompetition = ref<Competition | undefined>();
+        const itemsPerPage = ref(5);
+        const currentPage = ref(1);
 
         const showForm = () => {
             isFormVisible.value = true;
@@ -95,7 +93,6 @@ export default {
             await competitionStore().deleteCategory(index);
         };
 
-
         const handleInput = (name: string) => {
             selectedCategoryName.value = name;
         };
@@ -108,6 +105,16 @@ export default {
             return categories.value.filter((category) =>
                 category.name.toLowerCase().includes(selectedCategoryName.value?.toLowerCase() ?? '')
             );
+        });
+
+        const paginatedCategories = computed(() => {
+            const start = (currentPage.value - 1) * itemsPerPage.value;
+            const end = start + itemsPerPage.value;
+            return filteredCategories.value.slice(start, end);
+        });
+
+        const numberOfPages = computed(() => {
+            return Math.ceil(filteredCategories.value.length / itemsPerPage.value);
         });
 
         const handleSelectedCompetition = async () => {
@@ -126,7 +133,6 @@ export default {
                 categories.value = competitionStore().categories;
             }
         };
-
 
         onMounted(async () => {
             competitions.value = competitionStore().competitions;
@@ -157,9 +163,11 @@ export default {
             handleSelectedCircuit,
             deleteCategory,
             filteredCategories,
-            handleInput
+            handleInput,
+            paginatedCategories,
+            numberOfPages,
+            currentPage
         };
     },
 };
 </script>
-

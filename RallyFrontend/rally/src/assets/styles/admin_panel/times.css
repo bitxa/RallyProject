@@ -65,4 +65,5 @@ strong {
 
 .info_message {
   color: var(--secondary_fontcolor_dark);
+  margin-bottom: 2vh;
 }

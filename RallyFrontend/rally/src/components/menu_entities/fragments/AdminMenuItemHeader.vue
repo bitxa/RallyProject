@@ -31,8 +31,7 @@ export default {
         },
     },
 
-    emits: ['input_name'],
-
+    emits: ['input_name'],  //
     setup(props, { emit }) {
         const selectedItemName = ref<string | null>(null);
 

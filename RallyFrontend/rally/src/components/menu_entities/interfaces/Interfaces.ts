@@ -26,6 +26,7 @@ export interface Circuit {
 }
 
 export interface Competitor {
+value: Competitor;
   _id: string;
   name: string;
   age: number;
@@ -49,7 +50,7 @@ export interface Sponsor {
 export interface Team {
   _id: string;
   name: string;
-  car_number: string;
+  car_number: number;
   driver: Competitor;
   copilot: Competitor;
 }

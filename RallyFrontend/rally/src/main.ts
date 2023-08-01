@@ -11,6 +11,9 @@ import * as directives from "vuetify/directives";
 
 // CSS
 import "material-icons/iconfont/material-icons.css";
+//MDI
+import "@mdi/font/css/materialdesignicons.css";
+
 
 const vuetify = createVuetify({
   components,

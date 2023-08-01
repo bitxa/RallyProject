@@ -20,6 +20,11 @@ aside {
   color: var(--fontcolor_dark);
   min-height: 100vh;
   overflow-y: scroll;
+  transition: all 0.9s ease;
+  -webkit-transition: all 0.9s ease;
+  -moz-transition: all 0.9s ease;
+  -ms-transition: all 0.9s ease;
+  -o-transition: all 0.9s ease;
 }
 
 main {
@@ -40,7 +45,7 @@ li {
 }
 
 .rally_logo {
-  width: 100%;
+  width: 90%;
   height: auto;
   margin: 3vh;
   color: var(--fontcolor_dark);
@@ -65,7 +70,6 @@ li {
 .user .admin_image {
   -webkit-clip-path: circle(50% at 50% 50%);
   clip-path: circle(50% at 50% 50%);
-  
   width: 14vh;
   height: auto;
   margin: 3vh;
@@ -92,10 +96,16 @@ li {
   height: auto;
   color: var(--fontcolor_dark);
   font-size: 2.2vh;
-  border-radius: 15px;
+  border-radius: 1vh;
+  font-weight: 500;
+  padding: 0.2vh;
   margin: 1vh;
   border-style: none;
   background-color: var(--menu_buttoncolor_dark);
+  -webkit-border-radius: 1vh;
+  -moz-border-radius: 1vh;
+  -ms-border-radius: 1vh;
+  -o-border-radius: 1vh;
 }
 .menu button span {
   width: 50%;
@@ -167,4 +177,50 @@ li {
     width: 100%;
     border-right: none;
   }
+}
+aside .aside-close-icon {
+  position: absolute;
+  top: 0.3rem;
+  right: 0rem;
+  color: #f4f4f4;
+  font-weight: 900;
+  background-color: #f35727;
+  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.section-header {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeeeee;
+  border-radius: 1vh;
+  padding: 1.9vh;
+  margin: 0 auto;
+  margin-bottom: 2vh;
+  padding-left: 1vh;
+  -webkit-border-radius: 1vh;
+  -moz-border-radius: 1vh;
+  -ms-border-radius: 1vh;
+  -o-border-radius: 1vh;
+}
+
+.section-header .info {
+  padding: 2vh;
+  font-size: 1rem;
+}
+
+.section-header .new-btn {
+  background-color: #febe01;
+  color: #f6f6f6;
+  font-weight: bolder;
+  border-radius: 2vh;
+}
+
+.section-header .new-btn .icon {
+  width: auto;
+  padding: 0;
+  font-size: 1rem;
 }

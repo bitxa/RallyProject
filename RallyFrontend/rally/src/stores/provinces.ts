@@ -202,5 +202,9 @@ export const useProvincesStore = defineStore("provincias", {
     getProvinces(): any {
       return this.provinces;
     },
+
+    getProvincesNames(): String[]{
+      return this.provinces.map((province: any) => province.name);
+    },
   },
 });

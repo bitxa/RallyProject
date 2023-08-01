@@ -162,3 +162,27 @@
   outline: none;
 }
 
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-top: 15vh;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  height: 100%;
+  top: 0;
+}
+
+.no-data-message h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.no-data-message p {
+  margin-top: 8px;
+} 

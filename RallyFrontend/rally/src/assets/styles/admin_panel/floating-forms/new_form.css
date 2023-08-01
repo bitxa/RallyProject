@@ -17,7 +17,7 @@
   overflow: auto;
 }
 
-.popup .header{
+.header{
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,8 +25,8 @@
   margin: 3vh;
 }
 
-.popup .header_icon{
-  margin: 2vh;
+.header_icon{
+  margin: 3vh;
   font-size: xx-large;
 }
 
@@ -47,7 +47,7 @@ form .field {
   margin-bottom: 1vh;
 }
 
-form .field label {
+form label {
   font-size: small;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 600;
@@ -56,7 +56,7 @@ form .field label {
   text-transform: uppercase;
 }
 
-form .field input, select {
+form input, select {
   background-color: var(--backgroundcolor_dark);
   font-size: small;
   width: 100%;

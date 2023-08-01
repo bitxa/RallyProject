@@ -6,7 +6,7 @@ import {
   type Competitor,
   type Sponsor,
   type Team,
-} from "@/components/menu_entities/interfaces/Interfaces";
+} from "@/interfaces/Interfaces";
 import { apiService } from "@/services/apiService";
 import { ref } from "vue";
 
@@ -28,6 +28,7 @@ export const competitionStore = defineStore("competitionStore", {
       } catch (error) {
         console.error("Error fetching competitions:", error);
       }
+      return this.competitions;
     },
 
     async fetchCompetitors() {
@@ -37,6 +38,8 @@ export const competitionStore = defineStore("competitionStore", {
       } catch (error) {
         console.error("Error fetching competitors:", error);
         throw error;
+      } finally {
+        return this.competitors;
       }
     },
 
@@ -48,6 +51,7 @@ export const competitionStore = defineStore("competitionStore", {
         console.error("Error fetching circuits:", error);
         throw error;
       }
+      return this.circuits;
     },
 
     async fetchCategories() {
@@ -63,13 +67,27 @@ export const competitionStore = defineStore("competitionStore", {
     async fetchTeams() {
       try {
         const response = await apiService.getData("teams");
-        this.teams = response.data;
+        const teamsWithCompetitors = await Promise.all(
+          response.data.map(async (team: any) => {
+            const [driverResponse, coDriverResponse] = await Promise.all([
+              apiService.getData(`competitors/${team.driver_id}`),
+              apiService.getData(`competitors/${team.copilot_id}`),
+            ]);
+
+            return {
+              ...team,
+              driver: driverResponse.data,
+              copilot: coDriverResponse.data,
+            };
+          })
+        );
+          
+        this.teams = teamsWithCompetitors;
       } catch (error) {
         console.error("Error fetching teams:", error);
         throw error;
       }
     },
-
     async fetchSponsors() {
       try {
         const response = await apiService.getData("sponsors");
@@ -226,57 +244,86 @@ export const competitionStore = defineStore("competitionStore", {
       }
     },
 
-    async patchCompetition(competitionId: string, data: Object) {
+    async putCompetition(competitionId: string, data: Object) {
       try {
-        const updatedCompetition = await apiService.patchData(data, `competitions/${competitionId}`);
-        const index = this.competitions.findIndex(competition => competition._id === competitionId);
+        const updatedCompetition = await apiService.putData(
+          data,
+          `competitions/${competitionId}`
+        );
+        const index = this.competitions.findIndex(
+          (competition) => competition._id === competitionId
+        );
         this.competitions[index] = updatedCompetition.data;
       } catch (error) {
         throw error;
       }
     },
 
-    async patchCircuit(circuitId: string, data: Object) {
+    async putCircuit(circuitId: string, data: Object) {
       try {
-        const updatedCircuit = await apiService.patchData(data, `circuits/${circuitId}`);
-        const index = this.circuits.findIndex(circuit => circuit._id === circuitId);
+        const updatedCircuit = await apiService.putData(
+          data,
+          `circuits/${circuitId}`
+        );
+        const index = this.circuits.findIndex(
+          (circuit) => circuit._id === circuitId
+        );
         this.circuits[index] = updatedCircuit.data;
       } catch (error) {
         throw error;
       }
     },
 
-    async patchCategory(categoryId: string, data: Object) {
+    async putCategory(categoryId: string, data: Object) {
       try {
-        const updatedCategory = await apiService.patchData(data, `categories/${categoryId}`);
-        const index = this.categories.findIndex(category => category._id === categoryId);
+        const updatedCategory = await apiService.putData(
+          data,
+          `categories/${categoryId}`
+        );
+        const index = this.categories.findIndex(
+          (category) => category._id === categoryId
+        );
         this.categories[index] = updatedCategory.data;
       } catch (error) {
         throw error;
       }
     },
 
-    async patchTeam(teamId: string, data: Object) {
+    async putTeam(teamId: string, data: Object) {
       try {
-        const updatedTeam = await apiService.patchData(data, `teams/${teamId}`);
-        const index = this.teams.findIndex(team => team._id === teamId);
+        const updatedTeam = await apiService.putData(data, `teams/${teamId}`);
+        const index = this.teams.findIndex((team) => team._id === teamId);
         this.teams[index] = updatedTeam.data;
       } catch (error) {
         throw error;
       }
     },
 
-    async patchSponsor(sponsorId: string, data: Object) {
+    async putSponsor(sponsorId: string, data: Object) {
       try {
-        const updatedSponsor = await apiService.patchData(data, `sponsors/${sponsorId}`);
-        const index = this.sponsors.findIndex(sponsor => sponsor._id === sponsorId);
+        const updatedSponsor = await apiService.putData(
+          data,
+          `sponsors/${sponsorId}`
+        );
+        const index = this.sponsors.findIndex(
+          (sponsor) => sponsor._id === sponsorId
+        );
         this.sponsors[index] = updatedSponsor.data;
       } catch (error) {
         throw error;
       }
     },
 
-    // Other patch methods for different entities...
+    async getCategoryParticipantTeamsByIds(teams_ids: Array<string>) {
+      try {
+        const teamResponses = await Promise.all(
+          teams_ids.map((team_id) => apiService.getData(`teams/${team_id}`))
+        );
 
+        this.teams = teamResponses.map((response) => response.data);
+      } catch (error) {
+        throw error;
+      }
+    },
   },
 });

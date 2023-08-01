@@ -39,7 +39,7 @@ value: Competitor;
 
 export interface Sponsor {
   _id: string;
-  circuits_id: string;
+  circuit_id: string;
   name: string;
   description: string;
   logo: string;

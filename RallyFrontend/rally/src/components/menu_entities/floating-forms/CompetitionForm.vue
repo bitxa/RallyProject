@@ -1,42 +1,41 @@
 <style scoped src="@/assets/styles/admin_panel/floating-forms/new_form.css"></style>
 
 <template>
-    <div class="popup">
-        <span class="header">
-            <h2>{{ isNewCompetition ? 'Crear competencia' : 'Editar competencia' }}</h2>
-            <UnPathfinderUnite class="header_icon" />
-        </span>
+  <v-card>
+    <v-card-title class="d-flex justify-center align-center">
+      <h2>{{ isNewCompetition ? 'Crear competencia' : 'Editar competencia' }}</h2>
+      <UnPathfinderUnite class="header_icon" />
+    </v-card-title>
+    <v-card-text>
+      <form @submit.prevent="submitForm">
+        <label for="name">Nombre:</label>
+        <v-text-field variant="solo" type="text" id="name" v-model="competition.name" placeholder="Ingrese el nombre">
+        </v-text-field>
 
-        <form @submit.prevent="submitForm">
-            <div class="field">
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" v-model="competition.name" placeholder="Ingrese el nombre">
-            </div>
 
-            <div class="field">
-                <label for="province">Provincia:</label>
-                <select v-model="competition.province" placeholder="Escoga la provincia">
-                    <option v-for="province in provinces" :key="province.name" :value="province.name">{{ province.name }}
-                    </option>
-                </select>
-            </div>
+        <label for="province">Provincia:</label>
+        <v-select variant="solo" v-model="province" :items="provinces" label="Escoga la provincia"></v-select>
 
-            <div class="field">
-                <label for="description">Descripción:</label>
-                <input type="text" id="description" v-model="competition.description" placeholder="Ingrese la descripción">
-            </div>
 
-            <div class="field">
-                <label for="dates">Fecha Inicio y Fin:</label>
-                <VueDatePicker class="date-picker" v-model="date" range placeholder="Escoga las fechas" />
-            </div>
-        </form>
+        <label for="description">Descripción:</label>
+        <v-text-field variant="solo" type="text" id="description" v-model="competition.description"
+          placeholder="Ingrese la descripción"> </v-text-field>
 
-        <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
-        <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
-            :dialog="isNewCompetition ? '¿Seguro que deseas agregar una nueva competición?' : '¿Seguro que deseas editar la competición?'"
-            @cancel="closeConfirmation" />
-    </div>
+
+        <label for="dates">Fecha Inicio y Fin:</label>
+        <VueDatePicker class="date-picker" v-model="date" range placeholder="Escoga las fechas" />
+
+      </form>
+    </v-card-text>
+
+    <v-card-actions>
+      <Actions @cancel="closeForm" @accept="showConfirmationDialog = true" />
+    </v-card-actions>
+
+    <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
+      :dialog="isNewCompetition ? '¿Seguro que deseas agregar una nueva competición?' : '¿Seguro que deseas editar la competición?'"
+      @cancel="closeConfirmation" />
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -48,83 +47,82 @@ import { competitionStore } from '@/stores/competitionStore';
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 
-import { ref, onMounted, computed, defineEmits } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 import { useProvincesStore } from '@/stores/provinces';
+import type { Competition } from '@/interfaces/Interfaces';
 
 export default {
-    name: 'CompetitionForm',
-    components: { VueDatePicker, Actions, ConfirmationDialog, UnPathfinderUnite },
+  name: 'CompetitionForm',
+  components: { VueDatePicker, Actions, ConfirmationDialog, UnPathfinderUnite },
 
-    props: {
-        competition: {
-            type: Object,
-            default: null,
-        },
+  props: {
+    competition: {
+      type: Object as () => Competition | null,
+      default: null,
     },
+  },
 
-    emits: ['close'],
+  setup(props, { emit }) {
+    const showConfirmationDialog = ref(false);
+    const isNewCompetition = computed(() => props.competition === null);
+    const date = ref();
+    const provinces = useProvincesStore().getProvincesNames;
+    const province = ref('Loja');
+    const defaultCompetition = {
+      name: '',
+      description: '',
+      province: 'Loja',
+      start_date: new Date().toISOString(),
+      end_date: new Date().toISOString(),
+    };
 
-    setup(props, { emit }) {
-        defineEmits(['close']);
-        const showConfirmationDialog = ref(false);
-        const isNewCompetition = computed(() => props.competition === null);
-        const date = ref();
+    const competition = ref(props.competition || defaultCompetition);
 
-        const provinces = useProvincesStore().getProvinces;
+    const submitForm = async () => {
+      const data = {
+        name: competition.value.name,
+        description: competition.value.description,
+        start_date: competition.value.start_date,
+        end_date: competition.value.end_date,
+        province: competition.value.province,
+      };
 
-        onMounted(() => {
-            const startDate = new Date();
-            const endDate = new Date();
-            date.value = [startDate, endDate];
-        });
+      if (isNewCompetition.value) {
+        await competitionStore().addCompetition(data);
+      } else {
+        if (props.competition) {
+          await competitionStore().putCompetition(props.competition._id, data);
+        }
+      }
+      closeForm();
+    };
 
-        const submitForm = async () => {
-            const data = {
-                name: props.competition.name,
-                description: props.competition.description,
-                start_date: new Date(date.value[0]).toISOString(),
-                end_date: new Date(date.value[1]).toISOString(),
-                province: props.competition.province,
-            };
+    const showConfirmation = () => {
+      showConfirmationDialog.value = true;
+    };
 
-            if (isNewCompetition.value) {
-                await competitionStore().addCompetition(data);
-            } else {
-                // Edit existing competition
-                await competitionStore().patchCompetition(props.competition.id, data);
-            }
+    const closeConfirmation = () => {
+      showConfirmationDialog.value = false;
+    };
 
-            closeForm();
-        };
+    const closeForm = async () => {
+      await competitionStore().fetchCompetitions();
+      emit('close');
+    };
 
-        const cancelForm = () => {
-            closeForm();
-        };
-
-        const showConfirmation = () => {
-            showConfirmationDialog.value = true;
-        };
-
-        const closeConfirmation = () => {
-            showConfirmationDialog.value = false;
-        };
-
-        const closeForm = () => {
-            emit('close');
-        };
-
-        return {
-            isNewCompetition,
-            competition: props.competition || {},
-            date,
-            provinces,
-            submitForm,
-            cancelForm,
-            showConfirmationDialog: ref(false),
-            showConfirmation,
-            closeConfirmation,
-        };
-    },
+    return {
+      isNewCompetition,
+      competition,
+      date,
+      provinces,
+      province,
+      submitForm,
+      closeForm,
+      showConfirmationDialog,
+      showConfirmation,
+      closeConfirmation,
+    };
+  },
 };
 </script>

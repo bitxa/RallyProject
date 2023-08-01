@@ -6,7 +6,12 @@
 <template>
     <v-container fluid class="admin-panel">
 
-        <aside :class="{ 'hide-menu': !showMenu }" @mouseleave="hideMenuButton" @mouseover="showMenuButton">
+        <aside :class="{ 'hide-menu': !showMenu }">
+            <v-btn class="aside-close-icon" icon @click="hideMenuButton">
+                <v-icon>mdi-eye-off</v-icon>
+            </v-btn>
+
+
             <img src="../assets/img/rally_logo.png" class="rally_logo">
             <div class="user">
                 <img src="../assets/img/admin_default_image.png" class="admin_image">
@@ -81,7 +86,7 @@
                     </span>
                 </button>
             </div>
-            <v-switch v-model="lightMode" label="Dark Mode" inset @change="toggleDarkMode"></v-switch>
+            <!-- <v-switch v-model="lightMode" label="Dark Mode" inset @change="toggleDarkMode"></v-switch> -->
         </aside>
 
         <main :class="{ 'full-width': !showMenu }">
@@ -137,7 +142,6 @@ export default {
         return {
             currentComponent: localStorage.getItem('lastComponent') || 'CompetitionComponent',
             showMenu: true,
-            timeout: null as any,
             lightMode: false,
         };
     },
@@ -171,13 +175,10 @@ export default {
         },
 
         hideMenuButton() {
-            this.timeout = setTimeout(() => {
-                this.showMenu = false;
-            }, 2000);
+            this.showMenu = false;
         },
 
         showMenuButton() {
-            clearTimeout(this.timeout);
             this.showMenu = true;
         },
 

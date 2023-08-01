@@ -1,16 +1,17 @@
 @import "./base.css";
+@import "./pagination.css";
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap");
 
 :root {
   --backgroundcolor_dark: #ffffff !important;
-  --aside-backgroundcolor_dark: #093C71 !important;
+  --aside-backgroundcolor_dark: #093c71 !important;
   --fontcolor_dark: #e6e2de;
   --secondary_fontcolor_dark: #242529;
-  --input_backgroundcolor_dark: #242529 ;
+  --input_backgroundcolor_dark: #242529;
   --menu_buttoncolor_dark: #242529;
   --input_bordercolor_dark: #e6e6ec;
-  --secondary_input_bordercolor_dark: #F35727;
-  --secondary_background_color_dark: #F35727;
+  --secondary_input_bordercolor_dark: #f35727;
+  --secondary_background_color_dark: #f35727;
 }
 
 #app {
@@ -26,16 +27,26 @@ body {
   padding: 0%;
   margin: 0;
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: transparent;
 }
 
 li {
   list-style: none;
 }
 
-h2{
-  text-transform: capitalize;
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-p{
-  text-transform: capitalize;
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: transparent;
 }

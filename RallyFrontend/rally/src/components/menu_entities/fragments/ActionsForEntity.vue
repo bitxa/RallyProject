@@ -1,6 +1,6 @@
 <template>
          <div class="action_buttons">
-          <v-btn rounded class="edit-button" fab color="primary" @click="">
+          <v-btn rounded class="edit-button" fab color="primary" @click="editItem">
             <FaPencil />
           </v-btn>
 
@@ -54,6 +54,10 @@ export default {
     methods:{
         deleteItem(){
             this.$emit('deleteItem');
+        },
+
+        editItem(){
+            this.$emit('editItem');
         }
     }
 }

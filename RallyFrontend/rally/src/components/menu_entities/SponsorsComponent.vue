@@ -1,40 +1,38 @@
-<style src="@/assets/styles/admin_panel/entity_data.css"></style>
+<style src="@/assets/styles/admin_panel/admin_panel.css"></style>
 
 <template>
-    <v-breadcrumbs class="breadcrumb">
-        <div class="item">
-            <label class="breadcrumbLabel">Competencia:</label>
-            <input type="text" v-model="selectedCompetitionName" list="competitionsForCategory-list" class="breadcrumbInput"
-                @input="handleSelectedCompetition" @change="handleSelectedCompetition">
-            <datalist id="competitionsForCategory-list">
-                <option v-for="competition in competitions" :key="competition._id" :value="competition.name">{{
-                    competition.name }}</option>
-            </datalist>
-        </div>
+    <v-toolbar class="section-header" :elevation="8" density="compact" dense floating>
+        <h4>Competencia:</h4>
+        <v-autocomplete v-model="selectedCompetitionName" :items="competitions.map((competition: any) => competition.name)"
+            item-text="name" item-value="name" return-object append-icon="mdi-slash-forward"
+            @change="handleSelectedCompetition" density="compact" hide-details single-line class="ma-6 ml-2"
+            placeholder="Seleccione una competencia" color="light-blue lighten-2" variant="solo" clearable></v-autocomplete>
 
-        <div class="item">
-            <label class="breadcrumbLabel">Circuito:</label>
-            <input type="text" v-model="selectedCircuitName" list="circuitsForCategory-list" class="breadcrumbInput"
-                @input="handleSelectedCircuit" @change="handleSelectedCircuit">
-            <datalist id="circuitsForCategory-list">
-                <option v-for="circuit in circuits" :key="circuit._id" :value="circuit.name">{{ circuit.name }}</option>
-            </datalist>
-        </div>
-    </v-breadcrumbs>
+        <h4>Circuito:</h4>
+        <v-autocomplete v-model="selectedCircuitName" :items="circuits.map((circuit: any) => circuit.name)" item-text="name"
+            return-object @change="handleSelectedCircuit" density="compact" hide-details single-line class="ma-6 ml-2"
+            placeholder="Seleccione una competencia" color="light-blue lighten-2" variant="solo" clearable></v-autocomplete>
 
+    </v-toolbar>
     <AdminMenuItemHeader header_title="Sponsors" :data="sponsors" :placeholder="'Busque algún sponsor:'"
         @input_name="handleInput" />
 
     <NewEntityButton :button_title="'Añadir Sponsor'" @showForm="showForm"></NewEntityButton>
 
+    <div class="pagination-container">
+        <button @click="goToPreviousPage" :disabled="currentPage === 1" class="pagination-button">
+            <MdTwoToneNavigateBefore />
+        </button>
+        <v-pagination v-model="currentPage" :length="numberOfPages" :total-visible="5"
+            class="pagination-numbers"></v-pagination>
+        <button @click="goToNextPage" :disabled="currentPage === numberOfPages" class="pagination-button">
+            <MdTwoToneNavigateNext />
+        </button>
+    </div>
 
     <div class="container">
-        <div v-if="isFormVisible" class="overlay">
-            <NewSponsor @close="hideForm" :circuit="selectedCircuit" />
-        </div>
 
-        <div class="box" v-for="(sponsor, index) in filteredSponsors" :key="index">
-
+        <div class="box" v-for="(sponsor, index) in paginatedSponsors" :key="index">
             <span>
                 <h2>{{ sponsor.name }}</h2>
                 <ActionsForEntity @deleteItem="deleteSponsor(index)" />
@@ -57,29 +55,27 @@
 
             <div class="info-element">
                 <h2>Sitio Web (URL):</h2>
-                <a href="{{ sponsor.web }}">
-                    {{ sponsor.web }}
-                </a>
+                <a :href="sponsor.web">{{ sponsor.web }}</a>
             </div>
-
         </div>
-
-
     </div>
+
+    <v-dialog v-model="isFormVisible" persistent max-width="700px">
+        <sponsor-form @close="hideForm" :circuit="selectedCircuit" />
+    </v-dialog>
 </template>
-
+  
 <script lang="ts">
-
 import AdminMenuItemHeader from '@/components/menu_entities/fragments/AdminMenuItemHeader.vue';
 import ActionsForEntity from '@/components/menu_entities/fragments/ActionsForEntity.vue';
-
-import NewSponsor from "@/components/menu_entities/floating-forms/NewSponsor.vue";
+import SponsorForm from "@/components/menu_entities/floating-forms/SponsorForm.vue";
 import NewEntityButton from '@/components/menu_entities/fragments/NewEntityButton.vue';
 import { competitionStore } from '@/stores/competitionStore';
-
 import ImagePicker from "@/components/menu_entities/floating-forms/fragments/ImagePicker.vue";
-import type { Circuit, Competition, Sponsor } from './interfaces/Interfaces';
-import { onMounted, ref, computed, watchEffect } from 'vue';
+import type { Circuit, Competition, Sponsor } from '@/interfaces/Interfaces';
+import { onMounted, ref, computed, watchEffect, toRef } from 'vue';
+import { MdTwoToneNavigateBefore, MdTwoToneNavigateNext } from '@kalimahapps/vue-icons';
+import { usePagination } from '@/utils/pagination';
 
 export default {
     name: 'SponsorsComponent',
@@ -87,10 +83,11 @@ export default {
         AdminMenuItemHeader,
         ActionsForEntity,
         NewEntityButton,
-        NewSponsor,
-        ImagePicker
+        SponsorForm,
+        ImagePicker,
+        MdTwoToneNavigateBefore,
+        MdTwoToneNavigateNext,
     },
-
 
     setup() {
         const competitions = ref<Competition[]>([]);
@@ -102,10 +99,10 @@ export default {
         const selectedCircuitName = ref('');
         const selectedSponsor = ref<Sponsor>();
         const selectedSponsorName = ref('');
-
-
         const isFormVisible = ref(false);
         const logo = ref<File>();
+        const currentPage = ref(1);
+        const itemsPerPage = ref(5);
 
         const handleSelectedImage = (image: File) => {
             logo.value = image;
@@ -133,16 +130,22 @@ export default {
             sponsors.value = competitionStore().sponsors;
         };
 
-
         const filteredSponsors = computed(() => {
             if (!selectedSponsorName.value) {
                 return sponsors.value;
             }
-
-            return sponsors.value.filter((sponsor) =>
+            return sponsors.value.filter(sponsor =>
                 sponsor.name.toLowerCase().includes(selectedSponsorName.value?.toLowerCase() ?? '')
             );
         });
+
+        const sponsorsRef = toRef(filteredSponsors, 'value');
+
+        const { paginatedData: paginatedSponsors, numberOfPages, goToNextPage, goToPreviousPage } = usePagination(
+            itemsPerPage,
+            sponsorsRef,
+            currentPage,
+        );
 
         onMounted(async () => {
             competitions.value = competitionStore().competitions;
@@ -161,6 +164,7 @@ export default {
         const handleInput = (name: string) => {
             selectedSponsorName.value = name;
         };
+
         const showForm = () => {
             isFormVisible.value = true;
         };
@@ -173,27 +177,27 @@ export default {
             competitions,
             circuits,
             sponsors,
+            selectedCompetitionName,
+            selectedCircuitName,
             isFormVisible,
             logo,
-            showForm,
-            hideForm,
             handleSelectedImage,
             selectedCompetition,
-            selectedCompetitionName,
             selectedCircuit,
-            selectedCircuitName,
             handleSelectedCompetition,
             handleSelectedCircuit,
             deleteSponsor,
             handleInput,
             filteredSponsors,
-        }
+            currentPage,
+            numberOfPages,
+            paginatedSponsors,
+            goToNextPage,
+            goToPreviousPage,
+            showForm,
+            hideForm,
+        };
     },
-
 };
-
-
-
-
 </script>
-
+  

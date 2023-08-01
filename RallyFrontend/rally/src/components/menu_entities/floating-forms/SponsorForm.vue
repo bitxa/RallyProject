@@ -1,46 +1,45 @@
 <style scoped src="@/assets/styles/admin_panel/floating-forms/new_form.css"></style>
 
 <template>
-    <div class="popup">
-        <span class="header">
+    <v-card>
+        <v-card-title class="d-flex justify-center align-center">
             <h2>Agregar sponsor</h2>
-            <UnPathfinderUnite class="header_icon" />
-        </span>
+            <CaLocationCompanyFilled class="header_icon" />
+        </v-card-title>
+        <v-card-text>
+            <form @submit.prevent="submitForm">
 
-        <form @submit.prevent="submitForm">
-            <div class="field">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" v-model="name" placeholder="Ingrese el nombre">
-            </div>
+                <v-text-field type="text" id="name" v-model="name" placeholder="Ingrese el nombre" variant="solo-filled">
+                </v-text-field>
 
-            <div class="field">
-                <label for="dsscription">Descripción:</label>
-                <input type="text" id="description" v-model="description" placeholder="Ingrese la descripción">
-            </div>
+                <label for="description">Descripción:</label>
+                <v-textarea v-model="description" placeholder="Ingrese la descripción" variant="solo-filled"></v-textarea>
 
-            <div class="field">
-                <label for="logo">Logo</label>
-                <ImagePicker @imageSelected="handleImageSelected"></ImagePicker>
 
-            </div>
+                <label for="logo" prepend-icon="mdi-camera">Logo</label>
+                <ImagePicker @imageSelected="handleImageSelected" variant="solo-filled"></ImagePicker>
 
-            <div class="field">
+
                 <label for="web_site_url">Sitio Web (URL):</label>
-                <input type="text" id="web_site_url" v-model="web_site" placeholder="Ingrese la URL del sitio web">
-            </div>
+                <v-textarea type="text" id="web_site_url" v-model="web_site" placeholder="Ingrese la URL del sitio web"
+                    variant="solo-filled"></v-textarea>
 
-            <div class="field">
+
                 <label for="contact">Contacto:</label>
-                <input type="text" id="contact" v-model="contact" placeholder="Ingrese un contacto">
-            </div>
+                <v-textarea type="text" id="contact" v-model="contact" placeholder="Ingrese un contacto"
+                    variant="solo-filled"></v-textarea>
 
-        </form>
+            </form>
+        </v-card-text>
 
-        <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
+        <v-card-actions>
+            <Actions @cancel="cancelForm" @accept="showConfirmationDialog = true" />
+        </v-card-actions>
+
         <ConfirmationDialog v-model="showConfirmationDialog" @confirm="submitForm" @edit="showConfirmationDialog = false"
             :dialog="'¿Seguro que deseas agrear un nuevo sponsor ?'" @cancel="closeConfirmation" />
-
-    </div>
+    </v-card>
 </template>
 
 <script lang="ts">
@@ -50,17 +49,17 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import ConfirmationDialog from "@/components/menu_entities/floating-forms/fragments/ConfirmationDialog.vue";
 import Actions from "@/components/menu_entities/floating-forms/fragments/ActionsComponent.vue";
 import ImagePicker from "@/components/menu_entities/floating-forms/fragments/ImagePicker.vue";
-
+import { CaLocationCompanyFilled } from "@kalimahapps/vue-icons";
 import { apiService } from '@/services/apiService';
 import { competitionStore } from '@/stores/competitionStore';
 import type { PropType } from 'vue';
-import type { Circuit, Sponsor } from '../interfaces/Interfaces';
+import type { Circuit, Sponsor } from '@/interfaces/Interfaces';
 
 
 export default {
 
-    components: { VueDatePicker, Actions, ImagePicker, ConfirmationDialog },
-    name: 'NewSponsor',
+    components: { VueDatePicker, Actions, ImagePicker, ConfirmationDialog, CaLocationCompanyFilled },
+    name: 'SponsorForm',
 
     data() {
         return {

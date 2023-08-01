@@ -15,7 +15,7 @@ class ApiService {
     return axios.delete(`${this.API_URL}/${endpoint}/${id}`);
   }
 
-  async patchData(data: any, endpoint: string) {
+  async putData(data: any, endpoint: string) {
     return axios.put(`${this.API_URL}/${endpoint}`, data);
   }
 }

@@ -39,7 +39,6 @@ export default {
 
 <style scoped>
 .image-upload-container {
-    display: block;
     width: 100%;
 }
 </style>
